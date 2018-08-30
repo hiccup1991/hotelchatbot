@@ -1,0 +1,18 @@
+{% extends 'chatbot/base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel-heading">
+                <h3><i>Direct Chat To Us</i></h3>
+            </div>  
+            <div class="panel-body fixed-panel"></div>
+                <a href = "{% url 'frontdesk' %}" class="btn btn-primary">Front desk</a>
+                <a href = "{% url 'concierge' %}" class="btn btn-primary">Concierge</a>
+                <hr>
+                <a href = "{% url 'activitiesdesk' %}" class="btn btn-primary">Activities Desk</a>
+                <a href = "{% url 'reservations' %}" class="btn btn-primary">Reservations</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

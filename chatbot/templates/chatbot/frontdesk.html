@@ -1,0 +1,68 @@
+{% extends 'chatbot/base.html' %}
+
+{% block content %}
+    <div class="container background-color: rgb(255,0,255);">
+        <div class="row">
+            <h3 class="text-center"><small><strong>Artificial</strong></small><font color="white"> Intelligence!!! </font><small><strong>Here</strong></small><font color="white"> I am..</font></h3>
+            ​
+            <div class="col-md-6 col-md-offset-6">
+                <div id="chatPanel" class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong><span class="glyphicon glyphicon-globe"></span> Talk with Me !!! (You: Green / Bot: White) </strong>
+                    </div>
+                    <div class="panel-body fixed-panel">
+                        <ul class="media-list">
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        <form method="post" id="chatbot-form">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Enter Message" name="messageText" id="messageText" autofocus/>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-info" type="button" id="chatbot-form-btn">SEND <span class="glyphicon glyphicon-pencil"></span></button>
+                                    <button class="btn btn-info" type="button" id="chatbot-form-btn-clear">CLEAR <span class="glyphicon glyphicon-erase"></span></button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}   
+{% block script %}
+    <script>
+    $(function() {
+        $('#chatbot-form-btn').click(function(e) {
+            e.preventDefault();
+            $('#chatbot-form').submit();
+        });
+        $('#chatbot-form-btn-clear').click(function(e) {
+            e.preventDefault();
+            $('#chatPanel').find('.media-list').html('');
+        });
+        $('#chatbot-form').submit(function(e) {
+            e.preventDefault();
+            var message = $('#messageText').val();
+            $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : #2EFE2E" class="media-body">' + message + '<hr/></div></div></div></li>');
+
+
+            $.ajax({
+                type: "POST",
+                url: "/frontdeskask/",
+                data: { messagetext: message, csrfmiddlewaretoken: '{{ csrf_token }}'},
+                success: function(response) {
+                    $('#messageText').val('');
+                    var answer = response.answer;
+                    const chatPanel = document.getElementById("chatPanel");
+                    $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "color : white" class="media-body">' + answer + '<hr/></div></div></div></li>');
+                    $(".fixed-panel").stop().animate({ scrollTop: $(".fixed-panel")[0].scrollHeight}, 1000);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+    </script>
+{% endblock %}
