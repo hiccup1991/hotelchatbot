@@ -46,9 +46,9 @@ def activitiesdesk(request):
     # return render(request, 'chatbot/activitiesdesk.html')
 
 @login_required
-def reservations(request):
-    histories = History.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).filter(bot=Bot.objects.get(name="reservations")).order_by('chatdatetime')
-    return render(request, 'chatbot/reservations.html', {'histories': histories})
+def operator(request):
+    histories = History.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).filter(bot=Bot.objects.get(name="operator")).order_by('chatdatetime')
+    return render(request, 'chatbot/operator.html', {'histories': histories})
     # return render(request, 'chatbot/reservations.html')
 
 @login_required
@@ -94,7 +94,7 @@ def activitiesdeskask(request):
         return JsonResponse({'status':'OK','answer':bot_response})
 
 @login_required
-def reservationsask(request):
+def operatorask(request):
     message = request.POST.get("messageText", "")
     kernel = aiml.Kernel()
     if os.path.isfile("bot_brain.brn"):
@@ -104,5 +104,5 @@ def reservationsask(request):
         kernel.saveBrain("bot_brain.brn")
     while True:
         bot_response = kernel.respond(message)
-        instance = History.objects.create(user=request.user, bot=Bot.objects.get(name="reservations"), usertext=message, bottext=bot_response)
+        instance = History.objects.create(user=request.user, bot=Bot.objects.get(name="operator"), usertext=message, bottext=bot_response)
         return JsonResponse({'status':'OK','answer':bot_response})

@@ -52,7 +52,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/activitiesdeskask/",
+            url: "/operatorask/",
             headers: {'X-CSRFToken': '{{ csrf_token }}'},
             data: $(this).serialize(),
             success: function(response) {

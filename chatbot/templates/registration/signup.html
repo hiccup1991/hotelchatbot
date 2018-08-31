@@ -1,29 +1,11 @@
 {% extends "chatbot/base.html" %}
 
 {% block content %}
-    <form>
-        <div class="form-group">
-            <label for="inputName">UserName</label>
-            <input type="text" class="form-control" id="inputName" placeholder="Name">
-        </div>
-        <!-- <div class="form-group">
-                <label for="inputEmail">Email</label>
-                <input type="email" class="form-control" id="inputEmail" placeholder="Email"> 
-        </div> -->
-        <div class="form-group">
-            <label for="inputPassword">Password</label>
-            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-        </div>
-
-        <div class="form-group">
-            <label for="inputrePassword">Retype Password</label>
-            <input type="password" class="form-control" id="inputrePassword" placeholder="Retype Password">
-        </div>
-        <!-- <div class="checkbox">
-            <label><input type="checkbox"> Remember me</label>
-        </div> -->                
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}              
         <button type="submit" class="btn btn-primary" style="width:100%">Register</button>
     </form>
-    <div class="hint-text">Already have an account? <a href="{{ url: 'accounts/login' }}">Login here</a></div>
+    <div class="hint-text">Already have an account? <a href="{% url 'login' %}">Login here</a></div>
     </div>
 {% endblock %}
