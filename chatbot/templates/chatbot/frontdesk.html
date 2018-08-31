@@ -12,6 +12,10 @@
                     </div>
                     <div class="panel-body fixed-panel">
                         <ul class="media-list">
+                            {% for history in histories %}
+                                <li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : #2EFE2E" class="media-body"> {{ history.usertext }} <hr/></div></div></div></li>
+                                <li class="media"><div class="media-body"><div class="media"><div style = "color : white" class="media-body">{{ history.bottext }}<hr/></div></div></div></li>
+                            {% endfor %}
                         </ul>
                     </div>
                     <div class="panel-footer">
@@ -46,23 +50,22 @@
             var message = $('#messageText').val();
             $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : #2EFE2E" class="media-body">' + message + '<hr/></div></div></div></li>');
 
-
-            $.ajax({
-                type: "POST",
-                url: "/frontdeskask/",
-                headers: {'X-CSRFToken': '{{ csrf_token }}'},
-                data: $(this).serialize(),
-                success: function(response) {
-                    $('#messageText').val('');
-                    var answer = response.answer;
-                    const chatPanel = document.getElementById("chatPanel");
-                    $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "color : white" class="media-body">' + answer + '<hr/></div></div></div></li>');
-                    $(".fixed-panel").stop().animate({ scrollTop: $(".fixed-panel")[0].scrollHeight}, 1000);
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
+        $.ajax({
+            type: "POST",
+            url: "/frontdeskask/",
+            headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            data: $(this).serialize(),
+            success: function(response) {
+                $('#messageText').val('');
+                var answer = response.answer;
+                const chatPanel = document.getElementById("chatPanel");
+                $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "color : white" class="media-body">' + answer + '<hr/></div></div></div></li>');
+                $(".fixed-panel").stop().animate({ scrollTop: $(".fixed-panel")[0].scrollHeight}, 1000);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
         });
     });
     </script>
