@@ -8,13 +8,13 @@
             <div class="col-md-6 col-md-offset-6">
                 <div id="chatPanel" class="panel panel-info">
                     <div class="panel-heading">
-                        <strong><span class="glyphicon glyphicon-globe"></span> Talk with Me !!! (You: Green / Bot: White) </strong>
+                        <strong><span class="glyphicon glyphicon-globe"></span> Activitiesdesk Bot (You: Green / Bot: Blue) </strong>
                     </div>
                     <div class="panel-body fixed-panel">
                         <ul class="media-list">
                             {% for history in histories %}
-                                <li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : #2EFE2E" class="media-body"> {{ history.usertext }} <hr/></div></div></div></li>
-                                <li class="media"><div class="media-body"><div class="media"><div style = "color : white" class="media-body">{{ history.bottext }}<hr/></div></div></div></li>
+                                <li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : green" class="media-body"> {{ history.usertext }} <hr/></div></div></div></li>
+                                <li class="media"><div class="media-body"><div class="media"><div style = "color : blue" class="media-body">{{ history.bottext }}<hr/></div></div></div></li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -48,7 +48,7 @@
         $('#chatbot-form').submit(function(e) {
             e.preventDefault();
             var message = $('#messageText').val();
-            $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : #2EFE2E" class="media-body">' + message + '<hr/></div></div></div></li>');
+            $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : green" class="media-body">' + message + '<hr/></div></div></div></li>');
 
         $.ajax({
             type: "POST",
@@ -59,7 +59,7 @@
                 $('#messageText').val('');
                 var answer = response.answer;
                 const chatPanel = document.getElementById("chatPanel");
-                $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "color : white" class="media-body">' + answer + '<hr/></div></div></div></li>');
+                $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "color : blue" class="media-body">' + answer + '<hr/></div></div></div></li>');
                 $(".fixed-panel").stop().animate({ scrollTop: $(".fixed-panel")[0].scrollHeight}, 1000);
             },
             error: function(error) {

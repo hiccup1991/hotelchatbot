@@ -2,19 +2,19 @@
 
 <html>
     <head>
-        <title>Django Girls blog</title>
+        <title>Hotel Chatroom</title>
         <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}" type="text/css">
         <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap-theme.min.css' %}" type="text/css">
         <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" type="text/css">
-        <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+        <!-- <link rel="stylesheet" href="{% static 'css/chatbot.css' %}"> -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
     <body>
-        <div class="page-header">
+        <div class="page-header" style="text-align: center">
             <h1><a href="/">Hotel Chatroom</a></h1>
         </div>
 
-        <div class="content container">
+        <div class="content container" style="align-content: center">
             <div class="row">
                 <div class="col-md-8">
                     {% block content %}
