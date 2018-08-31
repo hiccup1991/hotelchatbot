@@ -9,6 +9,34 @@ from .models import History, Bot
 import aiml
 import os
 
+import httplib
+from urlparse import urlparse
+import uuid, json
+
+
+def translate (text, params):
+    subscriptionKey = 'f6620d6414c24f40a96fab96b7ec9fe2'
+    host = 'api.cognitive.microsofttranslator.com'
+    path = '/translate?api-version=3.0'
+    # params = "&to=es"
+    # text = 'Hello, world!'
+
+    requestBody = [{ 'Text' : text, }]
+    content = json.dumps(requestBody, ensure_ascii=False).encode('utf-8')
+    headers = {
+        'Ocp-Apim-Subscription-Key': subscriptionKey,
+        'Content-type': 'application/json',
+        'X-ClientTraceId': str(uuid.uuid4())
+    }
+
+    conn = httplib.HTTPSConnection(host)
+    conn.request ("POST", path + params, content, headers)
+    response = conn.getresponse ()
+    result = response.read()
+    output = json.dumps(json.loads(result), indent=4, ensure_ascii=False)
+    output = json.loads(output)
+    return output[0]['translations'][0]['text']
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -54,55 +82,79 @@ def operator(request):
 @login_required
 def frontdeskask(request):
     message = request.POST.get("messageText", "")
+    language = request.POST.get("language", "")
+    englishmessage = message
+    if language != "en":
+        englishmessage = translate(message, "&to=en")
     kernel = aiml.Kernel()
     if os.path.isfile("bot_brain.brn"):
         kernel.bootstrap(brainFile = "bot_brain.brn")
     else:
         kernel.bootstrap(learnFiles = os.path.abspath("aiml/std-startup.xml"), commands = "load aiml b")
         kernel.saveBrain("bot_brain.brn")
-    while True:
-        bot_response = kernel.respond(message)
-        instance = History.objects.create(user=request.user, bot=Bot.objects.get(name="frontdesk"), usertext=message, bottext=bot_response)
-        return JsonResponse({'status':'OK','answer':bot_response})
+
+    bot_response = kernel.respond(englishmessage)
+    if language != "en":
+        bot_response = translate(bot_response, "&to="+language)
+    instance = History.objects.create(user=request.user, bot=Bot.objects.get(name="frontdesk"), usertext=message, bottext=bot_response)
+    return JsonResponse({'status':'OK','answer':bot_response})
 
 @login_required
 def conciergeask(request):
     message = request.POST.get("messageText", "")
+    language = request.POST.get("language", "")
+    englishmessage = message
+    if language != "en":
+        englishmessage = translate(message, "&to=en")
     kernel = aiml.Kernel()
     if os.path.isfile("bot_brain.brn"):
         kernel.bootstrap(brainFile = "bot_brain.brn")
     else:
         kernel.bootstrap(learnFiles = os.path.abspath("aiml/std-startup.xml"), commands = "load aiml b")
         kernel.saveBrain("bot_brain.brn")
-    while True:
-        bot_response = kernel.respond(message)
-        instance = History.objects.create(user=request.user, bot=Bot.objects.get(name="concierge"), usertext=message, bottext=bot_response)
-        return JsonResponse({'status':'OK','answer':bot_response})
+
+    bot_response = kernel.respond(englishmessage)
+    if language != "en":
+        bot_response = translate(bot_response, "&to="+language)
+    instance = History.objects.create(user=request.user, bot=Bot.objects.get(name="concierge"), usertext=message, bottext=bot_response)
+    return JsonResponse({'status':'OK','answer':bot_response})
 
 @login_required
 def activitiesdeskask(request):
     message = request.POST.get("messageText", "")
+    language = request.POST.get("language", "")
+    englishmessage = message
+    if language != "en":
+        englishmessage = translate(message, "&to=en")
     kernel = aiml.Kernel()
     if os.path.isfile("bot_brain.brn"):
         kernel.bootstrap(brainFile = "bot_brain.brn")
     else:
         kernel.bootstrap(learnFiles = os.path.abspath("aiml/std-startup.xml"), commands = "load aiml b")
         kernel.saveBrain("bot_brain.brn")
-    while True:
-        bot_response = kernel.respond(message)
-        instance = History.objects.create(user=request.user, bot=Bot.objects.get(name="activitiesdesk"), usertext=message, bottext=bot_response)
-        return JsonResponse({'status':'OK','answer':bot_response})
+
+    bot_response = kernel.respond(englishmessage)
+    if language != "en":
+        bot_response = translate(bot_response, "&to="+language)
+    instance = History.objects.create(user=request.user, bot=Bot.objects.get(name="activitiesdesk"), usertext=message, bottext=bot_response)
+    return JsonResponse({'status':'OK','answer':bot_response})
 
 @login_required
 def operatorask(request):
     message = request.POST.get("messageText", "")
+    language = request.POST.get("language", "")
+    englishmessage = message
+    if language != "en":
+        englishmessage = translate(message, "&to=en")
     kernel = aiml.Kernel()
     if os.path.isfile("bot_brain.brn"):
         kernel.bootstrap(brainFile = "bot_brain.brn")
     else:
         kernel.bootstrap(learnFiles = os.path.abspath("aiml/std-startup.xml"), commands = "load aiml b")
         kernel.saveBrain("bot_brain.brn")
-    while True:
-        bot_response = kernel.respond(message)
-        instance = History.objects.create(user=request.user, bot=Bot.objects.get(name="operator"), usertext=message, bottext=bot_response)
-        return JsonResponse({'status':'OK','answer':bot_response})
+
+    bot_response = kernel.respond(englishmessage)
+    if language != "en":
+        bot_response = translate(bot_response, "&to="+language)
+    instance = History.objects.create(user=request.user, bot=Bot.objects.get(name="operator"), usertext=message, bottext=bot_response)
+    return JsonResponse({'status':'OK','answer':bot_response})

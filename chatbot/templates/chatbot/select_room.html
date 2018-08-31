@@ -1,18 +1,84 @@
 {% extends 'chatbot/base.html' %}
 
 {% block content %}
-    <div class="row">
+    <div class="container">
         <div class="col-md-8">
-            <div class="panel-heading">
-                <h3><i>Direct Chat To Us</i></h3>
-            </div>  
-            <div class="panel-body fixed-panel"></div>
-                <a href = "{% url 'frontdesk' %}" class="btn btn-primary">Front desk</a>
-                <a href = "{% url 'concierge' %}" class="btn btn-primary">Concierge</a>
-                <hr>
-                <a href = "{% url 'activitiesdesk' %}" class="btn btn-primary">Activities Desk</a>
-                <a href = "{% url 'operator' %}" class="btn btn-primary">Operator</a>
+            <div class="panel panel-info">
+                <div class="panel-body fixed-panel">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <h3>{{ user.username }}</h3>
+                        </div>
+                        <div class="col-xs-6">
+                            <h3 id='time-part'></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h2>@Your Service 24/7</h2>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3><span class="glyphicon glyphicon-globe"></span> Direct Chat To Us! </h3>
+                </div>
+                <div class="panel-body fixed-panel">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href = "{% url 'frontdesk' %}" class="btn btn-primary btn-block">Front desk</a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a href = "{% url 'concierge' %}" class="btn btn-primary btn-block">Concierge</a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href = "{% url 'activitiesdesk' %}" class="btn btn-primary btn-block">Activities Desk</a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a href = "{% url 'operator' %}" class="btn btn-primary btn-block">Operator</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-body fixed-panel">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-info">Hotel Info</a>
+                                <a href="#" class="list-group-item list-group-item-info">Restaurants</a>
+                                <a href="#" class="list-group-item list-group-item-info">Activities</a>
+                                <a href="#" class="list-group-item list-group-item-info">Spa</a>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-info">Reservations</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+{% endblock %}
+{% block script %}
+    <script>
+        $(document).ready(function() {
+            var interval = setInterval(function() {
+                var d = new Date();
+                var hours = d.getHours();
+                hours = hours > 9 ? hours: "0" + hours;
+                var minutes = d.getMinutes();
+                minutes = minutes > 9 ? minutes: "0" + minutes;
+                var seconds = d.getSeconds();
+                seconds = seconds > 9 ? seconds: "0" + seconds;
+                $('#time-part').html(hours + ":" + minutes + ":" + seconds);
+            }, 100);
+            
+            $('#stop-interval').on('click', function() {
+                clearInterval(interval);
+            });
+        });
+    </script>
 {% endblock %}
