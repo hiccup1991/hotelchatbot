@@ -50,7 +50,8 @@
             $.ajax({
                 type: "POST",
                 url: "/frontdeskask/",
-                data: { messagetext: message, csrfmiddlewaretoken: '{{ csrf_token }}'},
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                data: $(this).serialize(),
                 success: function(response) {
                     $('#messageText').val('');
                     var answer = response.answer;

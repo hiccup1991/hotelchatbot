@@ -9,7 +9,7 @@ class History(models.Model):
     chatdatetime = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.text
+        return self.usertext + "&" + self.bottext
 
 class Bot(models.Model):
     name = models.TextField()
