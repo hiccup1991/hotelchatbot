@@ -1,6 +1,6 @@
 .fixed-panel {
-    min-height: 400px;
-    max-height: 400px;
+    min-height: 700px;
+    max-height: 700px;
     background-color: #19313c;
     color: white;
     overflow: auto;

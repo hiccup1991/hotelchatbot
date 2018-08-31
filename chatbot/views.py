@@ -2,10 +2,26 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
 
 from .models import History, Bot
 import aiml
 import os
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username = username, password = raw_password)
+            login(request, user)
+            return redirect('/')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/signup.html', {'form': form})
 
 @login_required
 def select_room(request):
@@ -78,7 +94,7 @@ def activitiesdeskask(request):
         return JsonResponse({'status':'OK','answer':bot_response})
 
 @login_required
-def reservationskask(request):
+def reservationsask(request):
     message = request.POST.get("messageText", "")
     kernel = aiml.Kernel()
     if os.path.isfile("bot_brain.brn"):

@@ -8,4 +8,8 @@ urlpatterns = [
     url(r'^activitiesdesk/$', views.activitiesdesk, name='activitiesdesk'),
     url(r'^reservations/$', views.reservations, name='reservations'),
     url(r'^frontdeskask/$', views.frontdeskask, name='frontdeskask'),
+    url(r'^conciergeask/$', views.conciergeask, name='conciergeask'),
+    url(r'^activitiesdeskask/$', views.activitiesdeskask, name='activitiesdeskask'),
+    url(r'^reservationsask/$', views.reservationsask, name='reservationsask'),
+    url(r'^accounts/signup/$', views.signup, name='signup'),
 ]
