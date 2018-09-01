@@ -1,10 +1,10 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import ChatAdminHistory, ChatBotHistory, CustomUser
+from .models import ChatBotHistory, CustomUser, Message, Room
 import aiml
 import os
 
@@ -69,113 +69,85 @@ def select_room(request):
 
 @login_required
 def frontdesk(request):
-    histories = ChatAdminHistory.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).filter(admin=CustomUser.get(role="frontdesk")).order_by('chatdatetime')
-    return render(request, 'chatbot/frontdesk.html', {'histories': histories})
-    # return render(request, 'chatbot/frontdesk.html')
+    name = request.user.__str__() + "frontdesk"
+    instance = Room.objects.filter(name = name)
+    if(len(instance) == 0):
+        instance = Room.objects.create(name = request.user.__str__() + "frontdesk")
+    return render(request, 'chatbot/frontdesk.html')
 
 @login_required
 def concierge(request):
-    histories = ChatAdminHistory.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).filter(admin=CustomUser.get(role="concierge")).order_by('chatdatetime')
-    return render(request, 'chatbot/concierge.html', {'histories': histories})
-    # return render(request, 'chatbot/concierge.html')
+    name = request.user.__str__() + "concierge"
+    instance = Room.objects.filter(name = name)
+    if(len(instance) == 0):
+        instance = Room.objects.create(name = request.user.__str__() + "concierge")
+    return render(request, 'chatbot/concierge.html')
+
 
 @login_required
 def activitiesdesk(request):
-    histories = ChatAdminHistory.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).filter(admin=CustomUser.get(role="activitiesdesk")).order_by('chatdatetime')
-    return render(request, 'chatbot/activitiesdesk.html', {'histories': histories})
-    # return render(request, 'chatbot/activitiesdesk.html')
+    name = request.user.__str__() + "activitiesdesk"
+    instance = Room.objects.filter(name = name)
+    if(len(instance) == 0):
+        instance = Room.objects.create(name = request.user.__str__() + "activitiesdesk")
+    return render(request, 'chatbot/activitiesdesk.html')
 
 @login_required
 def operator(request):
-    histories = ChatAdminHistory.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).filter(admin=CustomUser.get(role="operator")).order_by('chatdatetime')
-    return render(request, 'chatbot/operator.html', {'histories': histories})
-    # return render(request, 'chatbot/operator.html')
+    name = request.user.__str__() + "operator"
+    instance = Room.objects.filter(name = name)
+    if(len(instance) == 0):
+        instance = Room.objects.create(name = request.user.__str__() + "operator")
+    return render(request, 'chatbot/operator.html')
 
 @login_required
 def reservations(request):
     histories = ChatBotHistory.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).order_by('chatdatetime')
     return render(request, 'chatbot/reservations.html', {'histories': histories})
-    # return render(request, 'chatbot/reservations.html')
 
 @login_required
 def frontdeskask(request):
-    message = request.POST.get("messageText", "")
-    language = request.POST.get("language", "")
-    englishmessage = message
-    if language != "en":
-        englishmessage = translate(message, "&to=en")
-    kernel = aiml.Kernel()
-    if os.path.isfile("bot_brain.brn"):
-        kernel.bootstrap(brainFile = "bot_brain.brn")
+    if request.POST:
+        message = request.POST.get("messageText", "")
+        roomname = request.user.username + "frontdesk"
+        if message != "" and roomname != "":
+            instance = Message.objects.create(user=request.user, room = Room.objects.get(name=roomname), content=message)
+            return JsonResponse({'status':'OK'})
     else:
-        kernel.bootstrap(learnFiles = os.path.abspath("aiml/std-startup.xml"), commands = "load aiml b")
-        kernel.saveBrain("bot_brain.brn")
-
-    bot_response = kernel.respond(englishmessage)
-    if language != "en":
-        bot_response = translate(bot_response, "&to="+language)
-    instance = History.objects.create(user=request.user, bot=Bot.objects.get(name="frontdesk"), usertext=message, bottext=bot_response)
-    return JsonResponse({'status':'OK','answer':bot_response})
+        return HttpResponse("request must be post")
 
 @login_required
 def conciergeask(request):
-    message = request.POST.get("messageText", "")
-    language = request.POST.get("language", "")
-    englishmessage = message
-    if language != "en":
-        englishmessage = translate(message, "&to=en")
-    kernel = aiml.Kernel()
-    if os.path.isfile("bot_brain.brn"):
-        kernel.bootstrap(brainFile = "bot_brain.brn")
+    if request.POST:
+        message = request.POST.get("messageText", "")
+        roomname = request.user.username + "concierge"
+        if message != "" and roomname != "":
+            instance = Message.objects.create(user=request.user, room = Room.objects.get(room = roomname), content=message)
+            return JsonResponse({'status':'OK'})
     else:
-        kernel.bootstrap(learnFiles = os.path.abspath("aiml/std-startup.xml"), commands = "load aiml b")
-        kernel.saveBrain("bot_brain.brn")
-
-    bot_response = kernel.respond(englishmessage)
-    if language != "en":
-        bot_response = translate(bot_response, "&to="+language)
-    instance = History.objects.create(user=request.user, bot=ServiceAdmin.objects.get(name="concierge"), usertext=message, bottext=bot_response)
-    return JsonResponse({'status':'OK','answer':bot_response})
+        return HttpResponse("request must be post")
 
 @login_required
 def activitiesdeskask(request):
-    message = request.POST.get("messageText", "")
-    language = request.POST.get("language", "")
-    englishmessage = message
-    if language != "en":
-        englishmessage = translate(message, "&to=en")
-    kernel = aiml.Kernel()
-    if os.path.isfile("bot_brain.brn"):
-        kernel.bootstrap(brainFile = "bot_brain.brn")
+    if request.POST:
+        message = request.POST.get("messageText", "")
+        roomname = request.user.username + "activitiesdesk"
+        if message != "" and roomname != "":
+            instance = Message.objects.create(user=request.user, room = Room.objects.get(room = roomname), content=message)
+            return JsonResponse({'status':'OK'})
     else:
-        kernel.bootstrap(learnFiles = os.path.abspath("aiml/std-startup.xml"), commands = "load aiml b")
-        kernel.saveBrain("bot_brain.brn")
-
-    bot_response = kernel.respond(englishmessage)
-    if language != "en":
-        bot_response = translate(bot_response, "&to="+language)
-    instance = History.objects.create(user=request.user, bot=ServiceAdmin.objects.get(name="activitiesdesk"), usertext=message, bottext=bot_response)
-    return JsonResponse({'status':'OK','answer':bot_response})
+        return HttpResponse("request must be post")
 
 @login_required
 def operatorask(request):
-    message = request.POST.get("messageText", "")
-    language = request.POST.get("language", "")
-    englishmessage = message
-    if language != "en":
-        englishmessage = translate(message, "&to=en")
-    kernel = aiml.Kernel()
-    if os.path.isfile("bot_brain.brn"):
-        kernel.bootstrap(brainFile = "bot_brain.brn")
+    if request.POST:
+        message = request.POST.get("messageText", "")
+        roomname = request.POST.get("roomname", "")
+        if message != "" and roomname != "":
+            instance = Message.objects.create(user=request.user, room = Room.objects.get(room = roomname), content=message)
+            return JsonResponse({'status':'OK'})
     else:
-        kernel.bootstrap(learnFiles = os.path.abspath("aiml/std-startup.xml"), commands = "load aiml b")
-        kernel.saveBrain("bot_brain.brn")
-
-    bot_response = kernel.respond(englishmessage)
-    if language != "en":
-        bot_response = translate(bot_response, "&to="+language)
-    instance = History.objects.create(user=request.user, bot=ServiceAdmin.objects.get(name="operator"), usertext=message, bottext=bot_response)
-    return JsonResponse({'status':'OK','answer':bot_response})
+        return HttpResponse("request must be post")
 
 @login_required
 def reservationsask(request):

@@ -2,5 +2,5 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^admin/frontdesk/$', views.adminfrontdesk, name='adminfrontdesk'),
+    url(r'^service/$', views.select_room, name='admin_select_room'),
 ]
