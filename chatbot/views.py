@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib.auth import login, logout, authenticate
-from .forms import UserCreationForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import ChatAdminHistory, ChatBotHistory, CustomUser
 import aiml
 import os
@@ -42,7 +42,6 @@ def login_user(request):
     if request.POST:
         username = request.POST['username']
         password = request.POST['password']
-
         user = authenticate(username = username, password = password)
         if user is not None:
             if user.is_active:
@@ -52,7 +51,7 @@ def login_user(request):
 
 def signup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
@@ -61,7 +60,7 @@ def signup(request):
             login(request, user)
             return redirect('/')
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
 @login_required

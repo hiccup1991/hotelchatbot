@@ -13,6 +13,4 @@ urlpatterns = [
     url(r'^activitiesdeskask/$', views.activitiesdeskask, name='activitiesdeskask'),
     url(r'^operatorask/$', views.operatorask, name='operatorask'),
     url(r'^reservationsask/$', views.reservationsask, name='reservationsask'),
-    url(r'^accounts/signup/$', views.signup, name='signup'),
-    url(r'^accounts/login/$', views.login_user,  name='login'),
 ]
