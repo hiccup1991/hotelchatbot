@@ -2,10 +2,9 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login, authenticate
-
-from .models import History, Bot
+from django.contrib.auth import login, logout, authenticate
+from .forms import UserCreationForm
+from .models import ChatAdminHistory, ChatBotHistory, CustomUser
 import aiml
 import os
 
@@ -37,6 +36,20 @@ def translate (text, params):
     output = json.loads(output)
     return output[0]['translations'][0]['text']
 
+def login_user(request):
+    logout(request)
+    username = password = ''
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username = username, password = password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return redirect('/')
+    return render(request, 'registration/login.html')
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -57,26 +70,32 @@ def select_room(request):
 
 @login_required
 def frontdesk(request):
-    histories = History.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).filter(bot=Bot.objects.get(name="frontdesk")).order_by('chatdatetime')
+    histories = ChatAdminHistory.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).filter(admin=CustomUser.get(role="frontdesk")).order_by('chatdatetime')
     return render(request, 'chatbot/frontdesk.html', {'histories': histories})
     # return render(request, 'chatbot/frontdesk.html')
 
 @login_required
 def concierge(request):
-    histories = History.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).filter(bot=Bot.objects.get(name="concierge")).order_by('chatdatetime')
+    histories = ChatAdminHistory.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).filter(admin=CustomUser.get(role="concierge")).order_by('chatdatetime')
     return render(request, 'chatbot/concierge.html', {'histories': histories})
     # return render(request, 'chatbot/concierge.html')
 
 @login_required
 def activitiesdesk(request):
-    histories = History.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).filter(bot=Bot.objects.get(name="activitiesdesk")).order_by('chatdatetime')
+    histories = ChatAdminHistory.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).filter(admin=CustomUser.get(role="activitiesdesk")).order_by('chatdatetime')
     return render(request, 'chatbot/activitiesdesk.html', {'histories': histories})
     # return render(request, 'chatbot/activitiesdesk.html')
 
 @login_required
 def operator(request):
-    histories = History.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).filter(bot=Bot.objects.get(name="operator")).order_by('chatdatetime')
+    histories = ChatAdminHistory.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).filter(admin=CustomUser.get(role="operator")).order_by('chatdatetime')
     return render(request, 'chatbot/operator.html', {'histories': histories})
+    # return render(request, 'chatbot/operator.html')
+
+@login_required
+def reservations(request):
+    histories = ChatBotHistory.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).order_by('chatdatetime')
+    return render(request, 'chatbot/reservations.html', {'histories': histories})
     # return render(request, 'chatbot/reservations.html')
 
 @login_required
@@ -116,7 +135,7 @@ def conciergeask(request):
     bot_response = kernel.respond(englishmessage)
     if language != "en":
         bot_response = translate(bot_response, "&to="+language)
-    instance = History.objects.create(user=request.user, bot=Bot.objects.get(name="concierge"), usertext=message, bottext=bot_response)
+    instance = History.objects.create(user=request.user, bot=ServiceAdmin.objects.get(name="concierge"), usertext=message, bottext=bot_response)
     return JsonResponse({'status':'OK','answer':bot_response})
 
 @login_required
@@ -136,7 +155,7 @@ def activitiesdeskask(request):
     bot_response = kernel.respond(englishmessage)
     if language != "en":
         bot_response = translate(bot_response, "&to="+language)
-    instance = History.objects.create(user=request.user, bot=Bot.objects.get(name="activitiesdesk"), usertext=message, bottext=bot_response)
+    instance = History.objects.create(user=request.user, bot=ServiceAdmin.objects.get(name="activitiesdesk"), usertext=message, bottext=bot_response)
     return JsonResponse({'status':'OK','answer':bot_response})
 
 @login_required
@@ -156,5 +175,25 @@ def operatorask(request):
     bot_response = kernel.respond(englishmessage)
     if language != "en":
         bot_response = translate(bot_response, "&to="+language)
-    instance = History.objects.create(user=request.user, bot=Bot.objects.get(name="operator"), usertext=message, bottext=bot_response)
+    instance = History.objects.create(user=request.user, bot=ServiceAdmin.objects.get(name="operator"), usertext=message, bottext=bot_response)
+    return JsonResponse({'status':'OK','answer':bot_response})
+
+@login_required
+def reservationsask(request):
+    message = request.POST.get("messageText", "")
+    language = request.POST.get("language", "")
+    englishmessage = message
+    if language != "en":
+        englishmessage = translate(message, "&to=en")
+    kernel = aiml.Kernel()
+    if os.path.isfile("bot_brain.brn"):
+        kernel.bootstrap(brainFile = "bot_brain.brn")
+    else:
+        kernel.bootstrap(learnFiles = os.path.abspath("aiml/std-startup.xml"), commands = "load aiml b")
+        kernel.saveBrain("bot_brain.brn")
+
+    bot_response = kernel.respond(englishmessage)
+    if language != "en":
+        bot_response = translate(bot_response, "&to="+language)
+    instance = ChatBotHistory.objects.create(user=request.user, usertext=message, bottext=bot_response)
     return JsonResponse({'status':'OK','answer':bot_response})

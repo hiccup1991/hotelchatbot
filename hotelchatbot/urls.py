@@ -17,10 +17,12 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 from django.contrib.auth import views
+from chatbot import views as chatbotviews 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^accounts/login/$', views.login, {'template_name': 'registration/login.html'}, name='login'),
     url(r'^accounts/logout/$', views.logout, name='logout'),
+    url(r'^accounts/signup/$', chatbotviews.signup, name='signup'),
+    url(r'^accounts/login/$', chatbotviews.login_user,  name='login'),
     url(r'', include('chatbot.urls')),
 ]
