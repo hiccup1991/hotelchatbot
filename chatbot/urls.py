@@ -13,4 +13,8 @@ urlpatterns = [
     url(r'^activitiesdeskask/$', views.activitiesdeskask, name='activitiesdeskask'),
     url(r'^operatorask/$', views.operatorask, name='operatorask'),
     url(r'^reservationsask/$', views.reservationsask, name='reservationsask'),
+    url(r'^frontdesk/messages/$', views.frontdeskmessages, name='frontdeskmessages'),
+    url(r'^concierge/messages/$', views.conciergemessages, name='conciergemessages'),
+    url(r'^operator/messages/$', views.operatormessages, name='operatormessages'),
+    url(r'^activitiesdesk/messages/$', views.activitiesdeskmessages, name='activitiesdeskmessages'),
 ]

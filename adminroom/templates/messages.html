@@ -1,0 +1,7 @@
+{% for message in messages %}
+    {% if message.user == request.user %}
+        <li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : green" class="media-body"> {{ message.content }} <hr/></div></div></div></li>
+    {% else %}
+        <li class="media"><div class="media-body"><div class="media"><div style = "color : blue" class="media-body">{{ message.content }}<hr/></div></div></div></li>
+    {% endif %}
+{% endfor %}

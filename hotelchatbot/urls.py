@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^accounts/signup/$', chatbotviews.signup, name='signup'),
     url(r'^accounts/login/$', chatbotviews.login_user,  name='login'),
     url(r'', include('chatbot.urls')),
+    url(r'', include('adminroom.urls')),
 ]

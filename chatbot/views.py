@@ -37,7 +37,6 @@ def translate (text, params):
     return output[0]['translations'][0]['text']
 
 def login_user(request):
-    logout(request)
     username = password = ''
     if request.POST:
         username = request.POST['username']
@@ -46,7 +45,10 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return redirect('/')
+                if user.role == "customer":
+                    return redirect('/')
+                else:
+                    return redirect('/service/')
     return render(request, 'registration/login.html')
 
 def signup(request):
@@ -168,3 +170,31 @@ def reservationsask(request):
         bot_response = translate(bot_response, "&to="+language)
     instance = ChatBotHistory.objects.create(user=request.user, usertext=message, bottext=bot_response)
     return JsonResponse({'status':'OK','answer':bot_response})
+
+@login_required
+def frontdeskmessages(request):
+    roomname = request.user.username + "frontdesk"
+    instance = Room.objects.get(name = roomname)
+    messages = Message.objects.filter(room = instance)
+    return render(request, 'messages.html', {'messages': messages})
+
+@login_required
+def conciergemessages(request):
+    roomname = request.user.username + "concierge"
+    instance = Room.objects.get(name = roomname)
+    messages = Message.objects.filter(room = instance)
+    return render(request, 'messages.html', {'messages': messages})
+
+@login_required
+def activitiesdeskmessages(request):
+    roomname = request.user.username + "activities"
+    instance = Room.objects.get(name = roomname)
+    messages = Message.objects.filter(room = instance)
+    return render(request, 'messages.html', {'messages': messages})
+
+@login_required
+def operatormessages(request):
+    roomname = request.user.username + "operator"
+    instance = Room.objects.get(name = roomname)
+    messages = Message.objects.filter(room = instance)
+    return render(request, 'messages.html', {'messages': messages})

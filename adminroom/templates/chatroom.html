@@ -1,4 +1,4 @@
-{% extends 'adminroom/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
     <div class="container">
@@ -7,12 +7,19 @@
                 <div class="panel-heading">
                     <strong><span class="glyphicon glyphicon-globe"></span> Frontdesk Bot (You: Green / Bot: Blue) </strong>
                 </div>
-                <div class="panel-body fixed-panel">
-                    <ul class="media-list">
-                        {% for history in histories %}
-                            <li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : green" class="media-body"> {{ history.usertext }} <hr/></div></div></div></li>
-                            <li class="media"><div class="media-body"><div class="media"><div style = "color : blue" class="media-body">{{ history.bottext }}<hr/></div></div></div></li>
+                <div id="msg-list-div" class="panel-body fixed-panel">
+                    <ul id="msg-list" class="media-list">
+                        {% for message in messages %}
+                            {% if message.user == request.user %}
+                                <li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : green" class="media-body"> {{ message.content }} <hr/></div></div></div></li>
+                            {% else %}
+                                <li class="media"><div class="media-body"><div class="media"><div style = "color : blue" class="media-body">{{ message.content }}<hr/></div></div></div></li>
+                            {% endif %}
                         {% endfor %}
+                        <script>
+                            var chatList = document.getElementById('msg-list-div');
+                            chatList.scrollTop = chatList.scrollHeight;
+                        </script>
                     </ul>
                 </div>
                 <div class="panel-footer">
@@ -24,7 +31,7 @@
                                 <button class="btn btn-info" type="button" id="chatbot-form-btn-clear">CLEAR <span class="glyphicon glyphicon-erase"></span></button>
                             </span>
                         </div>
-                        <hr>
+                        <!-- <hr>
                         <div class="dropdown">
                             <button class="btn btn-info dropdown-toggle" value = "en" type="button" id="language-menu" data-toggle="dropdown">English<span class="caret"></span></button>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="language-menu">
@@ -32,7 +39,7 @@
                                 <li role="presentation"><a role="menuitem" value = "de" tabindex="-1">German</a></li>
                                 <li role="presentation"><a role="menuitem" value = "it" tabindex="-1">Italian</a></li>
                             </ul>
-                        </div>
+                        </div> -->
                     </form>
                 </div>
             </div>
@@ -41,41 +48,58 @@
 {% endblock %}   
 {% block script %}
     <script>
-    $(function() {
-        $(".dropdown-menu li a").click(function(){
-            $(this).parents(".dropdown").find(".btn").html($(this).text() + '<span class="caret"></span>');
-            $(this).parents(".dropdown").find(".btn").attr('value', $(this).attr('value'));
-        });
-        $('#chatbot-form-btn').click(function(e) {
-            e.preventDefault();
-            $('#chatbot-form').submit();
-        });
-        $('#chatbot-form-btn-clear').click(function(e) {
-            e.preventDefault();
-            $('#chatPanel').find('.media-list').html('');
-        });
-        $('#chatbot-form').submit(function(e) {
-            e.preventDefault();
-            var message = $('#messageText').val();
-            $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : green" class="media-body">' + message + '<hr/></div></div></div></li>');
-            var req = $(this).serialize() + '&language=' + $(".dropdown .btn").attr('value');
-            $.ajax({
-                type: "POST",
-                url: "/frontdeskask/",
-                headers: {'X-CSRFToken': '{{ csrf_token }}'},
-                data: req,
-                success: function(response) {
-                    // $('#messageText').val('');
-                    // var answer = response.answer;
-                    // const chatPanel = document.getElementById("chatPanel");
-                    // $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "color : blue" class="media-body">' + answer + '<hr/></div></div></div></li>');
-                    // $(".fixed-panel").stop().animate({ scrollTop: $(".fixed-panel")[0].scrollHeight}, 1000);
-                },
-                error: function(error) {
-                    console.log(error);
-                }
+        $(function() {
+            $(".dropdown-menu li a").click(function(){
+                $(this).parents(".dropdown").find(".btn").html($(this).text() + '<span class="caret"></span>');
+                $(this).parents(".dropdown").find(".btn").attr('value', $(this).attr('value'));
+            });
+            $('#chatbot-form-btn').click(function(e) {
+                e.preventDefault();
+                $('#chatbot-form').submit();
+            });
+            $('#chatbot-form-btn-clear').click(function(e) {
+                e.preventDefault();
+                $('#chatPanel').find('.media-list').html('');
+            });
+            $('#chatbot-form').submit(function(e) {
+                e.preventDefault();
+                var message = $('#messageText').val();
+                $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : green" class="media-body">' + message + '<hr/></div></div></div></li>');
+                var req = $(this).serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "/service/{{ pk }}/sendmessage/",
+                    headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                    data: req,
+                    success: function(response) {
+                        // $('#messageText').val('');
+                        // var answer = response.answer;
+                        // const chatPanel = document.getElementById("chatPanel");
+                        // $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "color : blue" class="media-body">' + answer + '<hr/></div></div></div></li>');
+                        // $(".fixed-panel").stop().animate({ scrollTop: $(".fixed-panel")[0].scrollHeight}, 1000);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
             });
         });
-    });
+        function getMessages(){
+            if(!scrolling) {
+                $.get('/service/{{ pk }}/messages/', function(messages){
+                    $('#msg-list').html(messages);
+                    var chatlist = document.getElementById('msg-list-div');
+                    chatlist.scrollTop = chatlist.scrollHeight;
+                });
+            }
+            scrolling = false;
+        }
+        var scrolling = false;
+        $(function(){
+            $('#msg-list-div').on('scroll', function(){
+                scrolling = true;
+            });
+            refreshTimer = setInterval(getMessages, 2500);
+        });
     </script>
 {% endblock %}

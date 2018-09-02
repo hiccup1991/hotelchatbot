@@ -1,4 +1,4 @@
-{% extends 'adminroom/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
     <div class="container">
@@ -19,17 +19,15 @@
                 <div class="panel-body fixed-panel">
                     <div class="row">
                         <div class="col-xs-6">
-                            <div class="list-group">
-                                <a href="#" class="list-group-item list-group-item-info">Hotel Info</a>
-                                <a href="#" class="list-group-item list-group-item-info">Restaurants</a>
-                                <a href="#" class="list-group-item list-group-item-info">Activities</a>
-                                <a href="#" class="list-group-item list-group-item-info">Spa</a>
+                            <div id="room" class="list-group">
+                                {% for room in livechatrooms %}
+                                    <a href="{% url 'selectedroom' pk=room.pk %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-eye-open"></span> {{ room.name }}</a>
+                                {% endfor %}
                             </div>
-                        </div>
-                        <div class="col-xs-6">
-                            <div class="list-group">
-                                <a href="{% url 'reservations' %}" class="list-group-item list-group-item-info">Reservations</a>
-                            </div>
+                            <script>
+                                var roomList = document.getElementById('room');
+                                roomList.scrollTop = roomList.scrollHeight;
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -39,7 +37,7 @@
 {% endblock %}
 {% block script %}
     <script>
-        $(document).ready(function() {
+        $(document).ready(function() { 
             var interval = setInterval(function() {
                 var d = new Date();
                 var hours = d.getHours();
@@ -49,11 +47,23 @@
                 var seconds = d.getSeconds();
                 seconds = seconds > 9 ? seconds: "0" + seconds;
                 $('#time-part').html(hours + ":" + minutes + ":" + seconds);
-            }, 100);
-            
-            $('#stop-interval').on('click', function() {
-                clearInterval(interval);
+            }, 500);
+        });
+        var scrolling = false;
+        function getRooms(){
+            if(!scrolling) {
+                $.get('/service/livechatrooms/', function(livechatrooms){
+                    $('#room').html(livechatrooms);
+                });
+            }
+            scrolling = false;
+        }
+        $(function(){
+            $('#room').on('scroll', function()
+            {
+                scrolling = true;
             });
+            refreshTimer = setInterval(getRooms, 2500);
         });
     </script>
 {% endblock %}
