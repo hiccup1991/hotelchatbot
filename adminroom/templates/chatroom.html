@@ -1,48 +1,44 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container">
-        <div class="col-xs-8">
-            <div id="chatPanel" class="panel panel-info">
-                <div class="panel-heading">
-                    <strong><span class="glyphicon glyphicon-globe"></span> Frontdesk Bot (You: Green / Bot: Blue) </strong>
+    <div id="chatPanel" class="panel panel-info">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-globe"></span> Frontdesk Bot (You: Green / Bot: Blue) </strong>
+        </div>
+        <div id="msg-list-div" class="panel-body fixed-panel">
+            <ul id="msg-list" class="media-list">
+                {% for message in messages %}
+                    {% if message.user == request.user %}
+                        <li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : green" class="media-body"> {{ message.content }} <hr/></div></div></div></li>
+                    {% else %}
+                        <li class="media"><div class="media-body"><div class="media"><div style = "color : blue" class="media-body">{{ message.content }}<hr/></div></div></div></li>
+                    {% endif %}
+                {% endfor %}
+                <script>
+                    var chatList = document.getElementById('msg-list-div');
+                    chatList.scrollTop = chatList.scrollHeight;
+                </script>
+            </ul>
+        </div>
+        <div class="panel-footer">
+            <form method="post" id="chatbot-form">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Enter Message" name="messageText" id="messageText" autofocus/>
+                    <span class="input-group-btn">
+                        <button class="btn btn-info" type="button" id="chatbot-form-btn">SEND <span class="glyphicon glyphicon-pencil"></span></button>
+                        <button class="btn btn-info" type="button" id="chatbot-form-btn-clear">CLEAR <span class="glyphicon glyphicon-erase"></span></button>
+                    </span>
                 </div>
-                <div id="msg-list-div" class="panel-body fixed-panel">
-                    <ul id="msg-list" class="media-list">
-                        {% for message in messages %}
-                            {% if message.user == request.user %}
-                                <li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : green" class="media-body"> {{ message.content }} <hr/></div></div></div></li>
-                            {% else %}
-                                <li class="media"><div class="media-body"><div class="media"><div style = "color : blue" class="media-body">{{ message.content }}<hr/></div></div></div></li>
-                            {% endif %}
-                        {% endfor %}
-                        <script>
-                            var chatList = document.getElementById('msg-list-div');
-                            chatList.scrollTop = chatList.scrollHeight;
-                        </script>
+                <!-- <hr>
+                <div class="dropdown">
+                    <button class="btn btn-info dropdown-toggle" value = "en" type="button" id="language-menu" data-toggle="dropdown">English<span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="language-menu">
+                        <li role="presentation"><a role="menuitem" value = "en" tabindex="-1">English</a></li>
+                        <li role="presentation"><a role="menuitem" value = "de" tabindex="-1">German</a></li>
+                        <li role="presentation"><a role="menuitem" value = "it" tabindex="-1">Italian</a></li>
                     </ul>
-                </div>
-                <div class="panel-footer">
-                    <form method="post" id="chatbot-form">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Enter Message" name="messageText" id="messageText" autofocus/>
-                            <span class="input-group-btn">
-                                <button class="btn btn-info" type="button" id="chatbot-form-btn">SEND <span class="glyphicon glyphicon-pencil"></span></button>
-                                <button class="btn btn-info" type="button" id="chatbot-form-btn-clear">CLEAR <span class="glyphicon glyphicon-erase"></span></button>
-                            </span>
-                        </div>
-                        <!-- <hr>
-                        <div class="dropdown">
-                            <button class="btn btn-info dropdown-toggle" value = "en" type="button" id="language-menu" data-toggle="dropdown">English<span class="caret"></span></button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="language-menu">
-                                <li role="presentation"><a role="menuitem" value = "en" tabindex="-1">English</a></li>
-                                <li role="presentation"><a role="menuitem" value = "de" tabindex="-1">German</a></li>
-                                <li role="presentation"><a role="menuitem" value = "it" tabindex="-1">Italian</a></li>
-                            </ul>
-                        </div> -->
-                    </form>
-                </div>
-            </div>
+                </div> -->
+            </form>
         </div>
     </div>
 {% endblock %}   

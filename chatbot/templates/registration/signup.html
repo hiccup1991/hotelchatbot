@@ -1,45 +1,41 @@
 {% extends "chatbot/base.html" %}
 
 {% block content %}
-    <div id="content-container" class="container p-none">
-        <div class="col-xs-8">
-            <form id="login-form" method="post" action="{% url 'signup' %}">
-                {% csrf_token %}
-                <table class="table">
-                    <tr>
-                        <td><label for="id_username">Username</label></td>
-                        <td><input id="id_username" name="username" type="text" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td><label for="id_role">Role</label></td>
-                        <td><input id="id_role" name="role" type="text" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td><label for="id_password1">Password</label></td>
-                        <td><input id="id_password1" name="password1" type="password" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td><label for="id_password2">Password Confirm</label></td>
-                        <td><input id="id_password2" name="password2" type="password" class="form-control"></td>
-                    </tr>
-                </table>
-                {% if form.errors %}
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            <div class="alert alert-danger">
-                                <strong>{{ field.label }}: {{ error|striptags }}</strong>
-                            </div>
-                        {% endfor %}
-                    {% endfor %}
-                    {% for error in form.non_field_errors %}
-                        <div class="alert alert-danger">
-                            <strong>{{ error|striptags }}</strong>
-                        </div>
-                    {% endfor %}
-                {% endif %}
-                <input type="submit" value="Signup"  class="btn btn-primary pull-right" />
-                <div class="hint-text">Already have an account? <a href="{% url 'login' %}">Login here</a></div>
-            </form>
-        </div>
-    </div>   
+    <form id="signup-form" method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
+        <table class="table">
+            <tr>
+                <td><label for="id_username">Username</label></td>
+                <td><input id="id_username" name="username" type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <td><label for="id_role">Role</label></td>
+                <td><input id="id_role" name="role" type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <td><label for="id_password1">Password</label></td>
+                <td><input id="id_password1" name="password1" type="password" class="form-control"></td>
+            </tr>
+            <tr>
+                <td><label for="id_password2">Password Confirm</label></td>
+                <td><input id="id_password2" name="password2" type="password" class="form-control"></td>
+            </tr>
+        </table>
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-warning">
+                        <strong>{{ field.label }}: {{ error|striptags }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-warning">
+                    <strong>{{ error|striptags }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <input type="submit" value="Signup"  class="btn btn-primary pull-right" />
+        <div class="hint-text">Already have an account? <a href="{% url 'login' %}">Login here</a></div>
+    </form>  
 {% endblock %}

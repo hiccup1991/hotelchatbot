@@ -5,9 +5,7 @@
         <title>Hotel Chatroom</title>
         <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}" type="text/css">
         <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap-theme.min.css' %}" type="text/css">
-        <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" type="text/css">
         <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
-        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     </head>
     <body>
         <div class="container">
@@ -17,15 +15,15 @@
                 {% endif %}
                 <h1><a href="/">Hotel Chatroom</a></h1>
             </div>
-            <div class="container">
+            <div class="content">
                 {% block content %}
                 {% endblock %}
             </div>
+            
         </div>
-
     </body>
-    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{% static 'jquery-1.12.0/jquery-1.12.0.min.js' %}"></script>
+    <script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
     {% block script %}
     {% endblock %}
 </html>

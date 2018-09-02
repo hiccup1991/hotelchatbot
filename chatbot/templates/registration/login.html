@@ -1,40 +1,35 @@
 {% extends "chatbot/base.html" %}
 
 {% block content %}
-    <div id="content-container" class="container p-none">
-        <!-- <div class="lgn-container col-lg-8"> -->
-            <div class="col-xs-8">
-            <form id="login-form" method="post" action="{% url 'login' %}">
-                {% csrf_token %}
-                <table class="table">
-                    <tr>
-                        <td><label for="id_username">Username</label></td>
-                        <td><input id="id_username" name="username" type="text" class="form-control"></td>
-                    </tr>
-                    <tr>
-                        <td><label for="id_password">Password</label></td>
-                        <td><input id="id_password" name="password" type="password" class="form-control"></td>
-                    </tr>
-                </table>
-                {% if form.errors %}
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            <div class="alert alert-danger">
-                                <strong>{{ field.label }}: {{ error|striptags }}</strong>
-                            </div>
-                        {% endfor %}
-                    {% endfor %}
-                    {% for error in form.non_field_errors %}
-                        <div class="alert alert-danger">
-                            <strong>{{ error|striptags }}</strong>
-                        </div>
-                    {% endfor %}
-                {% endif %}
+    <form id="login-form" method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <table class="table">
+            <tr>
+                <td><label for="id_username">Username&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
+                <td><input id="id_username" name="username" type="text" class="form-control"></td>
+            </tr>
+            <tr>
+                <td><label for="id_password">Password&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
+                <td><input id="id_password" name="password" type="password" class="form-control"></td>
+            </tr>
+        </table>
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-warning">
+                        <strong>{{ field.label }}: {{ error|striptags }}</strong>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-warning">
+                    <strong>{{ error|striptags }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
 
-                <input type="submit" value="Login"  class="btn btn-primary pull-right" />
-                <a href="{% url 'signup' %}">Signup</a>
-                <input type="hidden" name="next" value="{{ next }}" />
-            </form>
-        </div>
-    </div>   
+        <input type="submit" value="Login"  class="btn btn-primary pull-right" />
+        <a href="{% url 'signup' %}">Signup</a>
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
 {% endblock %}

@@ -1,39 +1,59 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container">
-        <div class="col-md-8">
-            <div class="panel panel-info">
-                <div class="panel-body fixed-panel">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <h3>{{ user.username }}</h3>
+    <div class="panel panel-info">
+        <div class="panel-body fixed-panel">
+            <div class="row">
+                <div class="col-xs-6">
+                    <h3>{{ user.username }}</h3>
+                </div>
+                <div class="col-xs-6">
+                    <h3 id='time-part'></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-body fixed-panel row">
+            <div class="col-xs-6 panel-body fixed-panel">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong><span class="glyphicon glyphicon-globe"></span> Waitting Room</strong>
+                    </div>
+                    <div class="panel-body fixed-panel">         
+                        <div id="room" class="list-group">
+                            {% for room in livechatrooms %}
+                                <a href="{% url 'selectedroom' pk=room.pk %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-eye-open"></span> {{ room.name }}</a>
+                            {% endfor %}
                         </div>
-                        <div class="col-xs-6">
-                            <h3 id='time-part'></h3>
-                        </div>
+                        <script>
+                            var roomList = document.getElementById('room');
+                            roomList.scrollTop = roomList.scrollHeight;
+                        </script>
                     </div>
                 </div>
             </div>
-            <div class="panel panel-info">
-                <div class="panel-body fixed-panel">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <div id="room" class="list-group">
-                                {% for room in livechatrooms %}
-                                    <a href="{% url 'selectedroom' pk=room.pk %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-eye-open"></span> {{ room.name }}</a>
-                                {% endfor %}
-                            </div>
-                            <script>
-                                var roomList = document.getElementById('room');
-                                roomList.scrollTop = roomList.scrollHeight;
-                            </script>
+            <div class="col-xs-6 panel-body fixed-panel">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <strong><span class="glyphicon glyphicon-globe"></span> Chatting Room</strong>
+                    </div>
+                    <div class="panel-body fixed-panel">         
+                        <div id="room" class="list-group">
+                            {% for room in livechatrooms %}
+                                <a href="{% url 'selectedroom' pk=room.pk %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-eye-open"></span> {{ room.name }}</a>
+                            {% endfor %}
                         </div>
+                        <script>
+                            var roomList = document.getElementById('room');
+                            roomList.scrollTop = roomList.scrollHeight;
+                        </script>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 {% endblock %}
 {% block script %}
     <script>
