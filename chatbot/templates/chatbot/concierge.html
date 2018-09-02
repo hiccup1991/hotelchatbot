@@ -80,7 +80,7 @@
         $('#chatbot-form').submit(function(e) {
             e.preventDefault();
             var message = $('#messageText').val();
-            $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : green" class="media-body">' + message + '<hr/></div></div></div></li>');
+            // $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : green" class="media-body">' + message + '<hr/></div></div></div></li>');
             var req = $(this).serialize() + '&language=' + $(".dropdown .btn").attr('value');
             $.ajax({
                 type: "POST",
