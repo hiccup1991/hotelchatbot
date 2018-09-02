@@ -66,3 +66,7 @@ def messages(request, pk):
     instance = get_object_or_404(Room, pk=pk)
     messages = Message.objects.filter(room = instance)
     return render(request, 'messages.html', {'messages': messages})
+
+@login_required
+def exitroom(request):
+    return JsonResponse({'status':'OK'})

@@ -74,7 +74,7 @@ def select_room(request):
 
 @login_required
 def frontdesk(request):
-    name = request.user.__str__() + "frontdesk"
+    name = request.user.username + "frontdesk"
     try:
         instance = Room.objects.get(name = name)
         instance.is_active = True
@@ -85,7 +85,7 @@ def frontdesk(request):
 
 @login_required
 def concierge(request):
-    name = request.user.__str__() + "concierge"
+    name = request.user.username + "concierge"
     try:
         instance = Room.objects.get(name = name)
         instance.is_active = True
@@ -97,7 +97,7 @@ def concierge(request):
 
 @login_required
 def activitiesdesk(request):
-    name = request.user.__str__() + "activitiesdesk"
+    name = request.user.username + "activitiesdesk"
     try:
         instance = Room.objects.get(name = name)
         instance.is_active = True
@@ -108,7 +108,7 @@ def activitiesdesk(request):
 
 @login_required
 def operator(request):
-    name = request.user.__str__() + "operator"
+    name = request.user.username + "operator"
     try:
         instance = Room.objects.get(name = name)
         instance.is_active = True
@@ -139,7 +139,7 @@ def conciergeask(request):
         message = request.POST.get("messageText", "")
         roomname = request.user.username + "concierge"
         if message != "" and roomname != "":
-            instance = Message.objects.create(user=request.user, room = Room.objects.get(room = roomname), content=message)
+            instance = Message.objects.create(user=request.user, room = Room.objects.get(name = roomname), content=message)
             return JsonResponse({'status':'OK'})
     else:
         return HttpResponse("request must be post")
@@ -150,7 +150,7 @@ def activitiesdeskask(request):
         message = request.POST.get("messageText", "")
         roomname = request.user.username + "activitiesdesk"
         if message != "" and roomname != "":
-            instance = Message.objects.create(user=request.user, room = Room.objects.get(room = roomname), content=message)
+            instance = Message.objects.create(user=request.user, room = Room.objects.get(name = roomname), content=message)
             return JsonResponse({'status':'OK'})
     else:
         return HttpResponse("request must be post")
@@ -159,9 +159,9 @@ def activitiesdeskask(request):
 def operatorask(request):
     if request.POST:
         message = request.POST.get("messageText", "")
-        roomname = request.POST.get("roomname", "")
+        roomname = request.user.username + "operator"
         if message != "" and roomname != "":
-            instance = Message.objects.create(user=request.user, room = Room.objects.get(room = roomname), content=message)
+            instance = Message.objects.create(user=request.user, room = Room.objects.get(name = roomname), content=message)
             return JsonResponse({'status':'OK'})
     else:
         return HttpResponse("request must be post")
@@ -202,7 +202,7 @@ def conciergemessages(request):
 
 @login_required
 def activitiesdeskmessages(request):
-    roomname = request.user.username + "activities"
+    roomname = request.user.username + "activitiesdesk"
     instance = Room.objects.get(name = roomname)
     messages = Message.objects.filter(room = instance)
     return render(request, 'messages.html', {'messages': messages})

@@ -5,12 +5,19 @@
         <div class="panel-heading">
             <strong><span class="glyphicon glyphicon-globe"></span> Activitiesdesk Room (You: Green / Service: Blue) </strong>
         </div>
-        <div class="panel-body fixed-panel">
-            <ul class="media-list">
-                {% for history in histories %}
-                    <li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : green" class="media-body"> {{ history.usertext }} <hr/></div></div></div></li>
-                    <li class="media"><div class="media-body"><div class="media"><div style = "color : blue" class="media-body">{{ history.bottext }}<hr/></div></div></div></li>
+        <div id="msg-list-div" class="panel-body fixed-panel">
+            <ul id="msg-list" class="media-list">
+                {% for message in messages %}
+                    {% if message.user == request.user %}
+                        <li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : green" class="media-body"> {{ message.content }} <hr/></div></div></div></li>
+                    {% else %}
+                        <li class="media"><div class="media-body"><div class="media"><div style = "color : blue" class="media-body">{{ message.content }}<hr/></div></div></div></li>
+                    {% endif %}
                 {% endfor %}
+                <script>
+                    var chatList = document.getElementById('msg-list-div');
+                    chatList.scrollTop = chatList.scrollHeight;
+                </script>
             </ul>
         </div>
         <div class="panel-footer">
@@ -83,17 +90,35 @@
                 headers: {'X-CSRFToken': '{{ csrf_token }}'},
                 data: req,
                 success: function(response) {
-                    $('#messageText').val('');
-                    var answer = response.answer;
-                    const chatPanel = document.getElementById("chatPanel");
-                    $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "color : blue" class="media-body">' + answer + '<hr/></div></div></div></li>');
-                    $(".fixed-panel").stop().animate({ scrollTop: $(".fixed-panel")[0].scrollHeight}, 1000);
+                    // $('#messageText').val('');
+                    // var answer = response.answer;
+                    // const chatPanel = document.getElementById("chatPanel");
+                    // $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "color : blue" class="media-body">' + answer + '<hr/></div></div></div></li>');
+                    // $(".fixed-panel").stop().animate({ scrollTop: $(".fixed-panel")[0].scrollHeight}, 1000);
                 },
                 error: function(error) {
                     console.log(error);
                 }
             });
         });
+    });
+    function getMessages(){
+        if(!scrolling) {
+            $.get('/activitiesdesk/messages/', function(messages){
+                //alert(messages);
+                $('#msg-list').html(messages);
+                var chatlist = document.getElementById('msg-list-div');
+                chatlist.scrollTop = chatlist.scrollHeight;
+            });
+        }
+        scrolling = false;
+    }
+    var scrolling = false;
+    $(function(){
+        $('#msg-list-div').on('scroll', function(){
+            scrolling = true;
+        });
+        refreshTimer = setInterval(getMessages, 500);
     });
     </script>
 {% endblock %}

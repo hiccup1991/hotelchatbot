@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^service/(?P<pk>\d+)/chatroom/$', views.selectedroom, name='selectedroom'),
     url(r'^service/(?P<pk>\d+)/sendmessage/$', views.sendmessage, name='sendmessage'),
     url(r'^service/(?P<pk>\d+)/messages/$', views.messages, name='messages'),
+    url(r'^service/exitroom/$', views.exitroom, name='exitroom'),
 ]
