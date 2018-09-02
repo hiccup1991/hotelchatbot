@@ -48,24 +48,10 @@
 {% endblock %}   
 {% block script %}
     <script>
-    function exitRoom(){
-        $.ajax({
-            type: "POST",
-            url: "/exitroom/",
-            headers: {'X-CSRFToken': '{{ csrf_token }}'},
-            data: "roomtype=operator",
-            success: function(response) {
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    }
     $(function() {
         $("#exit-room").click(function(e) {
-            exitRoom();
-            event.preventDefault();
-            history.back(1);
+            e.preventDefault();
+            window.location = '/exitroom/operator'
         });
         $(".dropdown-menu li a").click(function(){
             $(this).parents(".dropdown").find(".btn").html($(this).text() + '<span class="caret"></span>');
@@ -90,6 +76,7 @@
                 headers: {'X-CSRFToken': '{{ csrf_token }}'},
                 data: req,
                 success: function(response) {
+                    console.log(response);
                     // $('#messageText').val('');
                     // var answer = response.answer;
                     // const chatPanel = document.getElementById("chatPanel");

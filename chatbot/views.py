@@ -215,17 +215,10 @@ def operatormessages(request):
     return render(request, 'messages.html', {'messages': messages})
 
 @login_required
-def exitroom(request):
-    if request.POST:
-        roomtype = request.POST.get("roomtype", "")
-        if roomtype != "":
-            name = request.user.username + roomtype
-            try:
-                instance = Room.objects.get(name = name)
-                instance.is_active = False
-                instance.save()
-            except:
-                return HttpResponse("no room")
-            return JsonResponse({'status':'OK'})
-    else:
-        return HttpResponse("request must be post")    
+def exitroom(request, roomtype):
+    if(roomtype != ""):
+        roomname = request.user.username + roomtype
+        instance = Room.objects.get(name = roomname)
+        instance.is_active = False
+        instance.save()
+    return redirect('/')

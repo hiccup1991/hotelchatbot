@@ -43,6 +43,10 @@
 {% block script %}
     <script>
     $(function() {
+        $("#exit-room").click(function(e) {
+            e.preventDefault();
+            history.back(1);
+        });
         $(".dropdown-menu li a").click(function(){
             $(this).parents(".dropdown").find(".btn").html($(this).text() + ' <span class="caret"></span>');
             $(this).parents(".dropdown").find(".btn").attr('value', $(this).attr('value'));

@@ -17,5 +17,5 @@ urlpatterns = [
     url(r'^concierge/messages/$', views.conciergemessages, name='conciergemessages'),
     url(r'^operator/messages/$', views.operatormessages, name='operatormessages'),
     url(r'^activitiesdesk/messages/$', views.activitiesdeskmessages, name='activitiesdeskmessages'),
-    url(r'^exitroom/$', views.exitroom, name='exitroom'),
+    url(r'^exitroom/(?P<roomtype>\w+)/$', views.exitroom, name='exitroom'),
 ]
