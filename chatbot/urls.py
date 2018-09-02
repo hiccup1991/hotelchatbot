@@ -18,4 +18,8 @@ urlpatterns = [
     url(r'^operator/messages/$', views.operatormessages, name='operatormessages'),
     url(r'^activitiesdesk/messages/$', views.activitiesdeskmessages, name='activitiesdeskmessages'),
     url(r'^exitroom/(?P<roomtype>\w+)/$', views.exitroom, name='exitroom'),
+    url(r'^frontdeskmessageclear/$', views.frontdeskmessageclear, name='frontdeskmessageclear'),
+    url(r'^conciergemessageclear/$', views.conciergemessageclear, name='conciergemessageclear'),
+    url(r'^activitiesdeskmessageclear/$', views.activitiesdeskmessageclear, name='activitiesdeskmessageclear'),
+    url(r'^operatormessageclear/$', views.operatormessageclear, name='operatormessageclear'),
 ]

@@ -222,3 +222,43 @@ def exitroom(request, roomtype):
         instance.is_active = False
         instance.save()
     return redirect('/')
+
+@login_required
+def frontdeskmessageclear(request):
+    if request.POST:
+        roomname = request.user.username + "frontdesk"
+        instance = Room.objects.get(name = roomname)
+        Message.objects.filter(room = instance).delete()
+        return JsonResponse({'status':'OK'})
+    else:
+        return HttpResponse("request must be post")
+
+@login_required
+def operatormessageclear(request):
+    if request.POST:
+        roomname = request.user.username + "operator"
+        instance = Room.objects.get(name = roomname)
+        Message.objects.filter(room = instance).delete()
+        return JsonResponse({'status':'OK'})
+    else:
+        return HttpResponse("request must be post")
+
+@login_required
+def conciergemessageclear(request):
+    if request.POST:
+        roomname = request.user.username + "concierge"
+        instance = Room.objects.get(name = roomname)
+        Message.objects.filter(room = instance).delete()
+        return JsonResponse({'status':'OK'})
+    else:
+        return HttpResponse("request must be post")
+
+@login_required
+def activitiesdeskmessageclear(request):
+    if request.POST:
+        roomname = request.user.username + "activitiesdesk"
+        instance = Room.objects.get(name = roomname)
+        Message.objects.filter(room = instance).delete()
+        return JsonResponse({'status':'OK'})
+    else:
+        return HttpResponse("request must be post")

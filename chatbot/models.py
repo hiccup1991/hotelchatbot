@@ -39,8 +39,8 @@ class Room(models.Model):
         return self.name
 
 class Message(models.Model):
-    room = models.ForeignKey(Room, related_name="messages")
-    user = models.ForeignKey(CustomUser)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     content = models.CharField(max_length=250)
     timestamp = models.DateTimeField(auto_now_add=True)

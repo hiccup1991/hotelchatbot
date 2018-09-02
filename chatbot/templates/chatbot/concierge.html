@@ -63,7 +63,19 @@
         });
         $('#chatbot-form-btn-clear').click(function(e) {
             e.preventDefault();
-            $('#chatPanel').find('.media-list').html('');
+            // $('#chatPanel').find('.media-list').html('');
+            $.ajax({
+                type: "POST",
+                url: "/conciergemessageclear/",
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                data: {},
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
         });
         $('#chatbot-form').submit(function(e) {
             e.preventDefault();
