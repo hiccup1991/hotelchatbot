@@ -53,11 +53,12 @@ def sendmessage(request, pk):
 
 @login_required
 def select_room(request):
-    return render(request, 'select_room.html')
+    rooms = Room.objects.filter(is_active = True).filter(name__contains=request.user.role)
+    return render(request, 'select_room.html', {'livechatrooms': rooms})
 
 @login_required
 def livechatrooms(request):
-    rooms = Room.objects.all()
+    rooms = Room.objects.filter(is_active = True).filter(name__contains=request.user.role)
     return render(request, 'livechatrooms.html', {'livechatrooms': rooms})    
 
 @login_required

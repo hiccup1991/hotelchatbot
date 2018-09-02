@@ -1,4 +1,4 @@
-{% extends "chatbot/base.html" %}
+{% extends "registration/base.html" %}
 
 {% block content %}
     <form id="login-form" method="post" action="{% url 'login' %}">
@@ -28,8 +28,8 @@
             {% endfor %}
         {% endif %}
 
-        <input type="submit" value="Login"  class="btn btn-primary pull-right" />
-        <a href="{% url 'signup' %}">Signup</a>
+        <input type="submit" value="Login"  class="btn btn-primary pull-right" style="margin-right: 10px;"/>
+        <div class="hint-text" style="margin-left: 10px;">Do you want an account? <a href="{% url 'signup' %}">Signup</a></div>
         <input type="hidden" name="next" value="{{ next }}" />
     </form>
 {% endblock %}

@@ -1,3 +1,38 @@
-{% for room in livechatrooms %}
-    <a href="{% url 'selectedroom' pk=room.pk %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-eye-open"></span> {{ room.name }}</a>
-{% endfor %}
+<!-- <div class="col-xs-6 panel-body fixed-panel">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-globe"></span> Waiting Room</strong>
+        </div>
+        <div class="panel-body fixed-panel">         
+            <div id="waitingroom" class="list-group">
+                {% for room in livechatrooms %}
+                    <a href="{% url 'selectedroom' pk=room.pk %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-eye-open"></span> {{ room.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-xs-6 panel-body fixed-panel">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-globe"></span> Chatting Room</strong>
+        </div>
+        <div class="panel-body fixed-panel">         
+            <div id="chattingroom" class="list-group">
+                {% for room in livechatrooms %}
+                    <a href="{% url 'selectedroom' pk=room.pk %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-eye-close"></span> {{ room.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div id="chattingroom" class="list-group">
+    {% if livechatrooms.count > 0 %}
+        {% for room in livechatrooms %}
+            <a href="{% url 'selectedroom' pk=room.pk %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-eye-open"></span> {{ room.name }}</a>
+        {% endfor %}
+    {% else %}
+        <a href="#" class="list-group-item list-group-item-info">there is no chatting room</a>
+    {% endif %}
+</div>

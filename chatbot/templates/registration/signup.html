@@ -1,4 +1,4 @@
-{% extends "chatbot/base.html" %}
+{% extends "registration/base.html" %}
 
 {% block content %}
     <form id="signup-form" method="post" action="{% url 'signup' %}">
@@ -10,7 +10,11 @@
             </tr>
             <tr>
                 <td><label for="id_role">Role</label></td>
-                <td><input id="id_role" name="role" type="text" class="form-control"></td>
+                <td><select id="id_role" name="role" class="form-control">
+                    {% for value, text in form.fields.role.choices %}
+                        <option value="{{ value }}">{{ text }}</option>
+                    {% endfor %}
+                </select></td>
             </tr>
             <tr>
                 <td><label for="id_password1">Password</label></td>
@@ -35,7 +39,7 @@
                 </div>
             {% endfor %}
         {% endif %}
-        <input type="submit" value="Signup"  class="btn btn-primary pull-right" />
-        <div class="hint-text">Already have an account? <a href="{% url 'login' %}">Login here</a></div>
+        <input type="submit" value="Signup"  class="btn btn-primary pull-right" style="margin-right: 10px;"/>
+        <div class="hint-text" style="margin-left: 10px;">Already have an account? <a href="{% url 'login' %}">Login here</a></div>
     </form>  
 {% endblock %}

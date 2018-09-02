@@ -60,7 +60,10 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username = username, password = raw_password)
             login(request, user)
-            return redirect('/')
+            if user.role == "customer":
+                return redirect('/')
+            else:
+                return redirect('/service/')
     else:
         form = CustomUserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
@@ -72,34 +75,46 @@ def select_room(request):
 @login_required
 def frontdesk(request):
     name = request.user.__str__() + "frontdesk"
-    instance = Room.objects.filter(name = name)
-    if(len(instance) == 0):
-        instance = Room.objects.create(name = request.user.__str__() + "frontdesk")
+    try:
+        instance = Room.objects.get(name = name)
+        instance.is_active = True
+        instance.save()
+    except:
+        instance = Room.objects.create(name = name, is_active = True)
     return render(request, 'chatbot/frontdesk.html')
 
 @login_required
 def concierge(request):
     name = request.user.__str__() + "concierge"
-    instance = Room.objects.filter(name = name)
-    if(len(instance) == 0):
-        instance = Room.objects.create(name = request.user.__str__() + "concierge")
+    try:
+        instance = Room.objects.get(name = name)
+        instance.is_active = True
+        instance.save()
+    except:
+        instance = Room.objects.create(name = name, is_active = True)
     return render(request, 'chatbot/concierge.html')
 
 
 @login_required
 def activitiesdesk(request):
     name = request.user.__str__() + "activitiesdesk"
-    instance = Room.objects.filter(name = name)
-    if(len(instance) == 0):
-        instance = Room.objects.create(name = request.user.__str__() + "activitiesdesk")
+    try:
+        instance = Room.objects.get(name = name)
+        instance.is_active = True
+        instance.save()
+    except:
+        instance = Room.objects.create(name = name, is_active = True)
     return render(request, 'chatbot/activitiesdesk.html')
 
 @login_required
 def operator(request):
     name = request.user.__str__() + "operator"
-    instance = Room.objects.filter(name = name)
-    if(len(instance) == 0):
-        instance = Room.objects.create(name = request.user.__str__() + "operator")
+    try:
+        instance = Room.objects.get(name = name)
+        instance.is_active = True
+        instance.save()
+    except:
+        instance = Room.objects.create(name = name, is_active = True)
     return render(request, 'chatbot/operator.html')
 
 @login_required
@@ -198,3 +213,19 @@ def operatormessages(request):
     instance = Room.objects.get(name = roomname)
     messages = Message.objects.filter(room = instance)
     return render(request, 'messages.html', {'messages': messages})
+
+@login_required
+def exitroom(request):
+    if request.POST:
+        roomtype = request.POST.get("roomtype", "")
+        if roomtype != "":
+            name = request.user.username + roomtype
+            try:
+                instance = Room.objects.get(name = name)
+                instance.is_active = False
+                instance.save()
+            except:
+                return HttpResponse("no room")
+            return JsonResponse({'status':'OK'})
+    else:
+        return HttpResponse("request must be post")    

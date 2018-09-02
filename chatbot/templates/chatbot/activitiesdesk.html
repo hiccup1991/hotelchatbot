@@ -23,8 +23,11 @@
                     </span>
                 </div>
             </form>
-            <!-- <hr>
-            <div class="dropdown">
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-body fixed-panel">
+            <!-- <div id="translate" class="dropdown">
                 <button class="btn btn-info dropdown-toggle" value = "en" type="button" id="language-menu" data-toggle="dropdown">English<span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="language-menu">
                     <li role="presentation"><a role="menuitem" value = "en" tabindex="-1">English</a></li>
@@ -32,12 +35,31 @@
                     <li role="presentation"><a role="menuitem" value = "it" tabindex="-1">Italian</a></li>
                 </ul>
             </div> -->
+            <button id="exit-room" class="btn btn-info" type="button">EXIT <span class="glyphicon glyphicon-log-out"></span></button>
         </div>
     </div>
 {% endblock %}   
 {% block script %}
     <script>
+    function exitRoom(){
+        $.ajax({
+            type: "POST",
+            url: "/exitroom/",
+            headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            data: "roomtype=activitiesdesk",
+            success: function(response) {
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
     $(function() {
+        $("#exit-room").click(function(e) {
+            exitRoom();
+            event.preventDefault();
+            history.back(1);
+        });
         $(".dropdown-menu li a").click(function(){
             $(this).parents(".dropdown").find(".btn").html($(this).text() + '<span class="caret"></span>');
             $(this).parents(".dropdown").find(".btn").attr('value', $(this).attr('value'));

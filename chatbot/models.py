@@ -4,7 +4,19 @@ from django.contrib.auth.models import AbstractUser
 from django.template.defaultfilters import slugify
 
 class CustomUser(AbstractUser):
-    role = models.CharField(max_length=40)
+    CUSTOMER = 'customer'
+    FRONTDESK = 'frontdesk' 
+    CONCIERGE = 'concierge'
+    ACTIVITIESDESK = 'activitiesdesk'
+    OPERATOR = 'operator'
+    ROLE = (
+        (CUSTOMER, 'customer'),
+        (FRONTDESK, 'frontdesk'), 
+        (CONCIERGE, 'concierge'),
+        (ACTIVITIESDESK, 'activitiesdesk'),
+        (OPERATOR, 'operator'),
+    )
+    role = models.CharField(max_length=20, choices=ROLE, default=CUSTOMER,)
     
     def __str__(self):
         return self.username
@@ -21,6 +33,7 @@ class ChatBotHistory(models.Model):
 class Room(models.Model):
     name = models.CharField(max_length=40, unique=True)
     members = models.ManyToManyField(CustomUser, related_name="rooms")
+    is_active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

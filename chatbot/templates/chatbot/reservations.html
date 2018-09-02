@@ -24,14 +24,20 @@
                 </div>
             </form>
             <hr>
-            <div class="dropdown">
-                <button class="btn btn-info dropdown-toggle" value = "en" type="button" id="language-menu" data-toggle="dropdown">English<span class="caret"></span></button>
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div class="panel-body fixed-panel row">
+            <div id="translate" class="col-xs-6 dropdown float-left">
+                <button class="btn btn-info dropdown-toggle" value = "en" type="button" id="language-menu" data-toggle="dropdown">English <span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="language-menu">
                     <li role="presentation"><a role="menuitem" value = "en" tabindex="-1">English</a></li>
                     <li role="presentation"><a role="menuitem" value = "de" tabindex="-1">German</a></li>
                     <li role="presentation"><a role="menuitem" value = "it" tabindex="-1">Italian</a></li>
                 </ul>
             </div>
+            <div class="col-xs-6"><button id="exit-room" class="btn btn-info float-right" type="button">EXIT <span class="glyphicon glyphicon-log-out"></span></button></div>
+            
         </div>
     </div>
 {% endblock %}   
@@ -39,7 +45,7 @@
     <script>
     $(function() {
         $(".dropdown-menu li a").click(function(){
-            $(this).parents(".dropdown").find(".btn").html($(this).text() + '<span class="caret"></span>');
+            $(this).parents(".dropdown").find(".btn").html($(this).text() + ' <span class="caret"></span>');
             $(this).parents(".dropdown").find(".btn").attr('value', $(this).attr('value'));
         });
         $('#chatbot-form-btn').click(function(e) {

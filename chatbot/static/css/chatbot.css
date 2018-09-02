@@ -1,3 +1,4 @@
+
 h1, h2, h3 {
     text-align: center;
     color: rgb(6, 153, 211);
@@ -13,4 +14,12 @@ h1, h2, h3 {
 
 label, .hint-text{
     color: rgb(6, 153, 211);
+}
+
+#exit-room{
+    float: right;
+}
+
+#chattingroom a{
+    text-align: center;
 }
