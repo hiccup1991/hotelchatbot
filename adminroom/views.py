@@ -59,7 +59,8 @@ def select_room(request):
 @login_required
 def livechatrooms(request):
     rooms = Room.objects.filter(is_active = True).filter(name__contains=request.user.role)
-    return render(request, 'livechatrooms.html', {'livechatrooms': rooms})    
+    customers = CustomUser.objects.filter(role="customer")
+    return render(request, 'livechatrooms.html', {'livechatrooms': rooms, 'customers': customers})    
 
 @login_required
 def messages(request, pk):
@@ -69,4 +70,22 @@ def messages(request, pk):
 
 @login_required
 def exitroom(request):
+    return JsonResponse({'status':'OK'})
+
+@login_required
+def offerchat(request, customer):
+    name = customer + request.user.role
+    try:
+        instance = Room.objects.get(name = name)
+        instance.is_active = True
+        instance.save()
+    except:
+        instance = Room.objects.create(name = name, is_active = True)
+    return redirect('selectedroom', pk=instance.pk)
+
+@login_required
+def messageclear(request, pk):
+    instance = get_object_or_404(Room, pk=pk)
+    messages = Message.objects.filter(room = instance)
+    messages.delete()
     return JsonResponse({'status':'OK'})
