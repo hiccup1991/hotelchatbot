@@ -191,28 +191,28 @@ def frontdeskmessages(request):
     roomname = request.user.username + "frontdesk"
     instance = Room.objects.get(name = roomname)
     messages = Message.objects.filter(room = instance)
-    return render(request, 'messages.html', {'messages': messages})
+    return render(request, 'chatbot/messages.html', {'messages': messages})
 
 @login_required
 def conciergemessages(request):
     roomname = request.user.username + "concierge"
     instance = Room.objects.get(name = roomname)
     messages = Message.objects.filter(room = instance)
-    return render(request, 'messages.html', {'messages': messages})
+    return render(request, 'chatbot/messages.html', {'messages': messages})
 
 @login_required
 def activitiesdeskmessages(request):
     roomname = request.user.username + "activitiesdesk"
     instance = Room.objects.get(name = roomname)
     messages = Message.objects.filter(room = instance)
-    return render(request, 'messages.html', {'messages': messages})
+    return render(request, 'chatbot/messages.html', {'messages': messages})
 
 @login_required
 def operatormessages(request):
     roomname = request.user.username + "operator"
     instance = Room.objects.get(name = roomname)
     messages = Message.objects.filter(room = instance)
-    return render(request, 'messages.html', {'messages': messages})
+    return render(request, 'chatbot/messages.html', {'messages': messages})
 
 @login_required
 def exitroom(request, roomtype):
@@ -252,3 +252,19 @@ def activitiesdeskmessageclear(request):
     instance = Room.objects.get(name = roomname)
     Message.objects.filter(room = instance).delete()
     return JsonResponse({'status':'OK'})
+
+@login_required
+def incomingchat(request):
+    incomingchats = Room.objects.filter(name__startswith=request.user.username).filter(is_active = True)
+    return render(request, 'chatbot/incomingchat.html', {'incomingchats': incomingchats})    
+
+@login_required
+def selectincomingchat(request, roomname):
+    if roomname.endswith("frontdesk"):
+        return redirect('frontdesk')   
+    if roomname.endswith("concierge"):
+        return redirect('concierge')   
+    if roomname.endswith("activitiesdesk"):
+        return redirect('activitiesdesk')   
+    if roomname.endswith("operator"):
+        return redirect('operator')    

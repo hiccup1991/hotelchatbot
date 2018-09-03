@@ -22,4 +22,6 @@ urlpatterns = [
     url(r'^conciergemessageclear/$', views.conciergemessageclear, name='conciergemessageclear'),
     url(r'^activitiesdeskmessageclear/$', views.activitiesdeskmessageclear, name='activitiesdeskmessageclear'),
     url(r'^operatormessageclear/$', views.operatormessageclear, name='operatormessageclear'),
+    url(r'^incomingchat/$', views.incomingchat, name='incomingchat'),
+    url(r'^selectincomingchat/(?P<roomname>\w+)/$', views.selectincomingchat, name='selectincomingchat'),
 ]

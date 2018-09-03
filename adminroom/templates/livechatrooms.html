@@ -1,7 +1,7 @@
 <div class="col-xs-6 panel-body fixed-panel">
     <div class="panel panel-info">
         <div class="panel-heading">
-            <strong><span class="glyphicon glyphicon-globe"></span> Opened Chatting Room</strong>
+            <h4><span class="glyphicon glyphicon-globe"></span> Opened Chatting Room</h4>
         </div>
         <div class="panel-body fixed-panel">         
             <div id="chattingroom" class="list-group">
@@ -19,14 +19,16 @@
 <div class="col-xs-6 panel-body fixed-panel">
     <div class="panel panel-info">
         <div class="panel-heading">
-            <strong><span class="glyphicon glyphicon-globe"></span>Logined Customers</strong>
+            <h4><span class="glyphicon glyphicon-globe"></span> Customers</h4>
         </div>
         <div class="panel-body fixed-panel">         
             <div id="chattingroom" class="list-group">
                 {% if customers.count > 0 %}
                     {% for customer in customers %}
-                        <a href="{% url 'offerchat' customer=customer.username %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-eye-open"></span> {{ customer.username }}</a>
-                    {% endfor %}
+                        {% if customer.is_authenticated %}
+                            <a href="{% url 'offerchat' customer=customer.username %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-modal-window"></span> {{ customer.username }}</a>
+                        {% endif %}
+                        {% endfor %}
                 {% else %}
                     <a href="{% url 'adminchatroom' %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-search"></span> there is no logined customer</a>
                 {% endif %}

@@ -5,7 +5,7 @@
         <div class="panel-body fixed-panel">
             <div class="row">
                 <div class="col-xs-6">
-                    <h3>{{ user.username }}</h3>
+                    <h3 style="float:right;">{{ user.username }}</h3>
                 </div>
                 <div class="col-xs-6">
                     <h3 id='time-part'></h3>
@@ -14,6 +14,11 @@
         </div>
     </div>
     <h2>@Your Service 24/7</h2>
+    <div class="row">
+        <div class="col-xs-10"><h4 style="text-align: right;">Mute from notices hotel</h4></div>
+        <div id="mutenotice" class="col-xs-2" style="margin-top: 10px;"><label class="switch"><input id="mutecheckbox" type="checkbox"><span class="slider round"></span></label></div>
+    </div>
+    
     <div class="panel panel-info">
         <div class="panel-heading">
             <h3><span class="glyphicon glyphicon-globe"></span> Direct Chat To Us! </h3>
@@ -37,6 +42,20 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div id="incomingchats">
+        <!-- <div class="panel-heading">
+            <h4><span class="glyphicon glyphicon-globe"></span> Incoming chat</h4>
+        </div>
+        <div class="panel-body fixed-panel">
+            <div class="panel panel-info">
+                <div class="panel-body fixed-panel">
+                    {% for incomingchat in incomingchats %}
+                        <a href = "{% url 'selectincomingchat' roomname=incomingchat.name %}" class="btn btn-primary btn-block">{{ incomingchat.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div> -->
     </div>
     <div class="panel panel-info">
         <div class="panel-body fixed-panel">
@@ -75,6 +94,24 @@
             $('#stop-interval').on('click', function() {
                 clearInterval(interval);
             });
+        });
+        function getIncomingChat(){
+            if($('#mutecheckbox').is(':checked') == false){
+                $.get('/incomingchat/', function(incomingchat){
+                    $('#incomingchats').html(incomingchat);
+                });
+            }
+        }
+        $('#mutecheckbox').on('click', function() {
+            if($('#mutecheckbox').is(':checked')){
+                $('#incomingchats').hide();
+            }
+            else{
+                $('#incomingchats').show();
+            }
+        })
+        $(function(){
+            refreshTimer = setInterval(getIncomingChat, 2500);
         });
     </script>
 {% endblock %}

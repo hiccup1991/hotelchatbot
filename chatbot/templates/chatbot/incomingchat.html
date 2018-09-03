@@ -1,0 +1,14 @@
+{% if incomingchats.count > 0 %}
+<div  class="panel panel-info">
+    <div class="panel-heading">
+        <h4><span class="glyphicon glyphicon-blackboard"></span> Incoming chat</h4>
+    </div>
+    <div class="panel-body fixed-panel">
+        <div class="panel-body fixed-panel">
+            {% for incomingchat in incomingchats %}
+                <a href = "{% url 'selectincomingchat' roomname=incomingchat.name %}" class="btn btn-primary btn-block">{{ incomingchat.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
