@@ -2753,7 +2753,7 @@ I believe you.
 </template>
 </category>
 
-<category>
+<!-- <category>
 <pattern>I AM SINGLE</pattern>
 <template>
 <think><set name="married">single</set></think>
@@ -2769,7 +2769,7 @@ I believe you.
 <template>
 <srai>I AM SINGLE</srai>
 </template>
-</category>
+</category> -->
 
 <category>
 <pattern>I AM SKEPTICAL</pattern>

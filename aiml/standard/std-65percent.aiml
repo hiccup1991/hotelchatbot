@@ -11,6 +11,33 @@
 <meta name="language" content="en"/>
 
 <category>
+<pattern>I WANT TO RESERVE *</pattern>
+<template>
+<random>
+<li>What kind of room do you want? Single or double.</li>
+</random>
+</template>
+</category>
+
+<category>
+<pattern>SINGLE *</pattern>
+<template>
+<random>
+<li>Single room is $100 a day.</li>
+</random>
+</template>
+</category>
+
+<category>
+<pattern>DOUBLE *</pattern>
+<template>
+<random>
+<li>Double room is $160 a day.</li>
+</random>
+</template>
+</category>
+
+<category>
 <pattern><bot name="name"/> *</pattern>
 <template>
 <random>

@@ -8690,7 +8690,7 @@ My personality was completely customized by botmaster, when he or she first down
 <category>
 <pattern>HOW DO YOU INTRODUCE *</pattern>
 <template>
-I usually say, "What can I call you?"
+I usually say, "What can I do for you?"
 </template>
 </category>
 
@@ -18484,12 +18484,12 @@ Do you accept Freud's theories?
 </template>
 </category>
 
-<category>
+<!-- <category>
 <pattern>SINGLE *</pattern>
 <template>
 What a coincidence, I am single too.
 </template>
-</category>
+</category> -->
 
 <category>
 <pattern>SIT *</pattern>

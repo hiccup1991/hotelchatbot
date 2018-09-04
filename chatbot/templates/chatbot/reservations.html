@@ -8,8 +8,12 @@
         <div class="panel-body fixed-panel">
             <ul class="media-list">
                 {% for history in histories %}
-                    <li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : green" class="media-body"> {{ history.usertext }} <hr/></div></div></div></li>
-                    <li class="media"><div class="media-body"><div class="media"><div style = "color : blue" class="media-body">{{ history.bottext }}<hr/></div></div></div></li>
+                    {% if history.usertext != "" %}
+                        <li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : green" class="media-body"> {{ history.usertext }} <hr/></div></div></div></li>
+                    {% endif %}
+                    {% if history.bottext != "" %}
+                        <li class="media"><div class="media-body"><div class="media"><div style = "color : blue" class="media-body">{{ history.bottext }}<hr/></div></div></div></li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>

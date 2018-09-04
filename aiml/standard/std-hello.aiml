@@ -386,7 +386,7 @@ Some people use it for hello.<br />
 <pattern>HELLO</pattern>
 <template>
 <condition>
-<li name="name" value="">What can I call you?</li>
+<li name="name" value="">What can I do for you?</li>
 <li><srai>HELLO1</srai></li>
 </condition>
 </template>

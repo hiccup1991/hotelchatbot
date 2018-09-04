@@ -120,7 +120,14 @@ def operator(request):
 @login_required
 def reservations(request):
     histories = ChatBotHistory.objects.filter(chatdatetime__lte=timezone.now()).filter(user=request.user).order_by('chatdatetime')
-    return render(request, 'chatbot/reservations.html', {'histories': histories})
+    instances = []
+    if histories.count() > 0:
+        instance = ChatBotHistory.objects.create(user = request.user, usertext = "", bottext = "Hi, " + request.user.username + ", Nice to meet you again.")
+    else:
+        instance = ChatBotHistory.objects.create(user = request.user, usertext = "", bottext = "Hi, " + request.user.username)
+    instances.append(instance)
+    # return render(request, 'chatbot/reservations.html', {'histories': histories})
+    return render(request, 'chatbot/reservations.html', {'histories': instances})
 
 @login_required
 def frontdeskask(request):
