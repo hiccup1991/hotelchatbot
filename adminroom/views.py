@@ -11,6 +11,18 @@ import httplib
 from urlparse import urlparse
 import uuid, json
 
+import httplib
+from urlparse import urlparse
+import uuid, json
+
+def reqtranslate(request):
+    src = request.POST.get("src", "")
+    tg = request.POST.get("tg", "")
+    text = request.POST.get("text", "")
+    if text != "" and tg != "":
+        result = translate(text, "&from=" + src + "&to=" + tg)
+        return JsonResponse({'status':'OK', 'result':result})
+
 def translate (text, params):
     subscriptionKey = 'f6620d6414c24f40a96fab96b7ec9fe2'
     host = 'api.cognitive.microsofttranslator.com'

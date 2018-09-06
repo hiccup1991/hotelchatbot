@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^service/(?P<pk>\d+)/messages/$', views.messages, name='messages'),
     url(r'^service/exitroom/$', views.exitroom, name='exitroom'),
     url(r'^service/(?P<customer>\w+)/offerchat/$', views.offerchat, name='offerchat'),
+    url(r'^service/translate/$', views.reqtranslate, name='reqtranslate'),
 ]
