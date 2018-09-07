@@ -90,6 +90,7 @@
                                 <li role="presentation"><a role="menuitem" value = "hu" tabindex="-1">Hungarian</a></li>
                                 <li role="presentation"><a role="menuitem" value = "is" tabindex="-1">Icelandic</a></li>
                                 <li role="presentation"><a role="menuitem" value = "id" tabindex="-1">Indonesian</a></li>
+                                <li role="presentation"><a role="menuitem" value = "it" tabindex="-1">Italian</a></li>
                                 <li role="presentation"><a role="menuitem" value = "ja" tabindex="-1">Japanese</a></li>
                                 <li role="presentation"><a role="menuitem" value = "sw" tabindex="-1">Kiswahili</a></li>
                                 <li role="presentation"><a role="menuitem" value = "tlh" tabindex="-1">Klingon</a></li>
@@ -166,6 +167,7 @@
                                 <li role="presentation"><a role="menuitem" value = "hu" tabindex="-1">Hungarian</a></li>
                                 <li role="presentation"><a role="menuitem" value = "is" tabindex="-1">Icelandic</a></li>
                                 <li role="presentation"><a role="menuitem" value = "id" tabindex="-1">Indonesian</a></li>
+                                <li role="presentation"><a role="menuitem" value = "it" tabindex="-1">Italian</a></li>
                                 <li role="presentation"><a role="menuitem" value = "ja" tabindex="-1">Japanese</a></li>
                                 <li role="presentation"><a role="menuitem" value = "sw" tabindex="-1">Kiswahili</a></li>
                                 <li role="presentation"><a role="menuitem" value = "tlh" tabindex="-1">Klingon</a></li>
@@ -214,7 +216,7 @@
         $('#righttranslate').click(function(e) {
             e.preventDefault();
             var req = 'src='+$("#text1drop .btn").attr('value')+'&tg='+$("#text2drop .btn").attr('value')+'&text='+$("#text1").val();
-            alert(req);
+            //alert(req);
             $.ajax({
                 type: "POST",
                 url: "/service/translate/",
@@ -222,7 +224,7 @@
                 data: req,
                 success: function(response) {
                     result = response.result;
-                    alert(result);
+                    //alert(result);
                     $('#text2').val(result);
                 },
                 error: function(error) {
@@ -233,7 +235,7 @@
         $('#lefttranslate').click(function(e) {
             e.preventDefault();
             var req = 'src='+$("#text2drop .btn").attr('value')+'&tg='+$("#text1drop .btn").attr('value')+'&text='+$("#text2").val();
-            alert(req);
+            //alert(req);
             $.ajax({
                 type: "POST",
                 url: "/service/translate/",
@@ -241,7 +243,7 @@
                 data: req,
                 success: function(response) {
                     result = response.result;
-                    alert(result);
+                    //alert(result);
                     $('#text1').val(result);
                 },
                 error: function(error) {

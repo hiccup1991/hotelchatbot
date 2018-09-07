@@ -5,6 +5,13 @@ from django.http import JsonResponse, HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import ChatBotHistory, CustomUser, Message, Room
+
+# encoding=utf8  
+import sys  
+
+reload(sys)  
+sys.setdefaultencoding('utf8')
+
 import aiml
 import os
 
@@ -40,7 +47,8 @@ def translate (text, params):
     conn.request ("POST", path + params, content, headers)
     response = conn.getresponse ()
     result = response.read()
-    output = json.dumps(json.loads(result), indent=4, ensure_ascii=False)
+    output = json.dumps(json.loads(result), indent=4, ensure_ascii=False).encode('utf-8')
+    print(output)
     output = json.loads(output)
     return output[0]['translations'][0]['text']
 
