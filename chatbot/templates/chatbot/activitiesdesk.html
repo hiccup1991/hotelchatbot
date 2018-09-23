@@ -3,7 +3,7 @@
 {% block content %}
     <div id="chatPanel" class="panel panel-info">
         <div class="panel-heading">
-            <strong><span class="glyphicon glyphicon-globe"></span> Activitiesdesk Room (You: Green / Service: Blue) </strong>
+            <strong><span class="glyphicon glyphicon-globe"></span> Frontdesk Room (You: Green / Service: Blue) </strong>
         </div>
         <div id="msg-list-div" class="panel-body fixed-panel">
             <ul id="msg-list" class="media-list">
@@ -22,35 +22,25 @@
         </div>
         <div class="panel-footer">
             <form method="post" id="chatbot-form">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Enter Message" name="messageText" id="messageText" autofocus/>
-                    <span class="input-group-btn">
-                        <button class="btn btn-info" type="button" id="chatbot-form-btn">SEND <span class="glyphicon glyphicon-pencil"></span></button>
-                        <button class="btn btn-info" type="button" id="chatbot-form-btn-clear">CLEAR <span class="glyphicon glyphicon-erase"></span></button>
-                    </span>
+                <div class="row">
+                    <div class="col-sm-8 col-xs-12" style="padding:5px;"><input type="text" class="form-control" placeholder="Enter Message" name="messageText" id="messageText" autofocus/></div>
+                    <div class="col-sm-2 col-xs-12" style="padding:5px;"><button class="btn btn-info btn-block" type="button" id="chatbot-form-btn">Send <span class="glyphicon glyphicon-pencil"></span></button></div>
+                    <div class="col-sm-2 col-xs-12" style="padding:5px;"><button class="btn btn-info btn-block" type="button" id="chatbot-form-btn-clear">Clear <span class="glyphicon glyphicon-erase"></span></button></div>
                 </div>
             </form>
         </div>
     </div>
     <div class="panel panel-info">
-        <div class="panel-body fixed-panel">
-            <!-- <div id="translate" class="dropdown">
-                <button class="btn btn-info dropdown-toggle" value = "en" type="button" id="language-menu" data-toggle="dropdown">English<span class="caret"></span></button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="language-menu">
-                    <li role="presentation"><a role="menuitem" value = "en" tabindex="-1">English</a></li>
-                    <li role="presentation"><a role="menuitem" value = "de" tabindex="-1">German</a></li>
-                    <li role="presentation"><a role="menuitem" value = "it" tabindex="-1">Italian</a></li>
-                </ul>
-            </div> -->
-            <button id="exit-room" class="btn btn-info" type="button">EXIT <span class="glyphicon glyphicon-log-out"></span></button>
+        <div class="panel-body fixed-panel row">
+            <div class="col-sm-2 col-sm-offset-10 col-xs-12 col-xs-offset-0" style="padding:5px;"><button id="exit-room" class="btn btn-info btn-block" type="button">EXIT <span class="glyphicon glyphicon-log-out"></span></button></div>
         </div>
     </div>
     <div class="panel panel-info">
         <div class="panel-body fixed-panel">
             <div class="row">
-                <div class="col-xs-5">
+                <div class="col-sm-5 col-xs-12">
                     <div id="text1drop" class="dropdown">
-                        <button class="btn btn-info dropdown-toggle" value = "en" type="button" id="language-menu" data-toggle="dropdown">English<span class="caret"></span></button>
+                        <button class="btn btn-info dropdown-toggle" value = "en" type="button" id="language-menu" data-toggle="dropdown">English <span class="caret"></span></button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="language-menu">
                             <li role="presentation"><a href="" role="menuitem" value = "en" tabindex="-1">English</a></li>
                             <li role="presentation"><a href="" role="menuitem" value = "af" tabindex="-1">Afrikaans</a></li>
@@ -121,13 +111,26 @@
                     </div>
                     <textarea id="text1" style="width: 100%; height: 200px;"></textarea>
                 </div>
-                <div class="col-xs-2">
-                    <button id="righttranslate" class="btn btn-info" type="button" style="width: 100%; margin-top: 100px;"><span class="glyphicon glyphicon-arrow-right"></span></button>
-                    <button id="lefttranslate" class="btn btn-info" type="button" style="width: 100%; margin-top: 10px;"><span class="glyphicon glyphicon-arrow-left"></span></button>
+                <div class="col-sm-2 col-xs-12">
+                    <div class="row">
+                        <div class="col-sm-12 hidden-xs" style="padding:10px;">
+                            <button id="righttranslate" class="btn btn-info btn-block" type="button" style="margin-top:80px;"><span class="glyphicon glyphicon-arrow-right"></span></button>
+                        </div>
+                        <div class="col-sm-12 hidden-xs" style="padding:10px;">
+                            <button id="lefttranslate" class="btn btn-info btn-block" type="button"><span class="glyphicon glyphicon-arrow-left"></span></button>
+                        </div>
+                        <div class="hidden-sm hidden-md hidden-lg col-xs-2 col-xs-offset-4" style="padding:10px;">
+                            <button id="righttranslate" class="btn btn-info btn-block" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                        </div>
+                        <div class="hidden-sm hidden-md hidden-lg col-xs-2 col-xs-offset-0" style="padding:10px;">
+                            <button id="lefttranslate" class="btn btn-info btn-block" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-xs-5">
+
+                <div class="col-sm-5 col-xs-12">
                     <div id="text2drop" class="dropdown">
-                        <button class="btn btn-info dropdown-toggle" value = "en" type="button" id="language-menu" data-toggle="dropdown">English<span class="caret"></span></button>
+                        <button class="btn btn-info dropdown-toggle" value = "en" type="button" id="language-menu" data-toggle="dropdown">English <span class="caret"></span></button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="language-menu">
                             <li role="presentation"><a href="" role="menuitem" value = "en" tabindex="-1">English</a></li>
                             <li role="presentation"><a href="" role="menuitem" value = "af" tabindex="-1">Afrikaans</a></li>
@@ -249,7 +252,7 @@
         });
         $(".dropdown-menu li a").click(function(e){
             e.preventDefault();
-            $(this).parents(".dropdown").find(".btn").html($(this).text() + '<span class="caret"></span>');
+            $(this).parents(".dropdown").find(".btn").html($(this).text() + ' <span class="caret"></span>');
             $(this).parents(".dropdown").find(".btn").attr('value', $(this).attr('value'));
         });
         $('#chatbot-form-btn').click(function(e) {

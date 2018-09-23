@@ -4,13 +4,7 @@ h1, h2, h3, h4 {
 }
 
 .top-menu{
-    float: right;
-    margin-right: 20px;
     font-size: 26px;
-}
-
-#exit-room{
-    float: right;
 }
 
 #chattingroom a{

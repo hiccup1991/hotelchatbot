@@ -88,8 +88,9 @@ def signup(request):
 
 @login_required
 def select_room(request):
+    incomingchats = Room.objects.filter(name__startswith=request.user.username).filter(is_active = True)
     theme = get_object_or_404(CurrentTheme, pk=1)
-    return render(request, 'chatbot/select_room.html', {'theme': theme.theme})
+    return render(request, 'chatbot/select_room.html', {'theme': theme.theme, 'incomingchats': incomingchats})
 
 @login_required
 def frontdesk(request):

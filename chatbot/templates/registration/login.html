@@ -3,33 +3,33 @@
 {% block content %}
     <form id="login-form" method="post" action="{% url 'login' %}">
         {% csrf_token %}
-        <table class="table">
-            <tr>
-                <td><label for="id_username">Username&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
-                <td><input id="id_username" name="username" type="text" class="form-control"></td>
-            </tr>
-            <tr>
-                <td><label for="id_password">Password&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></td>
-                <td><input id="id_password" name="password" type="password" class="form-control"></td>
-            </tr>
-        </table>
-        {% if form.errors %}
-            {% for field in form %}
-                {% for error in field.errors %}
+        <div class="row">
+            <div class="col-sm-4 col-xs-12" style="padding:10px;"><label for="id_username">Username</label></div>
+            <div class="col-sm-8 col-xs-12" style="padding:10px;"><input id="id_username" name="username" type="text" class="form-control"></div>
+            
+            <div class="col-sm-4 col-xs-12" style="padding:10px;"><label for="id_password">Password</div>
+            <div class="col-sm-8 col-xs-12" style="padding:10px;"><input id="id_password" name="password" type="password" class="form-control"></div>
+        
+            {% if form.errors %}
+                
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="alert alert-warning">
+                            <strong>{{ field.label }}: {{ error|striptags }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
                     <div class="alert alert-warning">
-                        <strong>{{ field.label }}: {{ error|striptags }}</strong>
+                        <strong>{{ error|striptags }}</strong>
                     </div>
                 {% endfor %}
-            {% endfor %}
-            {% for error in form.non_field_errors %}
-                <div class="alert alert-warning">
-                    <strong>{{ error|striptags }}</strong>
-                </div>
-            {% endfor %}
-        {% endif %}
-
-        <input type="submit" value="Login"  class="btn btn-primary pull-right" style="margin-right: 10px;"/>
-        <div class="hint-text" style="margin-left: 10px;">Do you want an account? <a href="{% url 'signup' %}">Signup</a></div>
+            {% endif %}
+            <div class="col-sm-8 col-xs-12" style="padding:10px;">Do you want an account? <a href="{% url 'signup' %}">Signup</a></div>
+            <div class="col-sm-4 col-xs-12" style="padding:10px;">
+                <input type="submit" value="Login"  class="btn btn-primary btn-block" style="margin-right: 10px;"/>
+            </div>  
+        </div>
         <input type="hidden" name="next" value="{{ next }}" />
     </form>
 {% endblock %}
