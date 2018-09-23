@@ -1,6 +1,7 @@
 {% load static %}
 <script>
-    $("#themedrop .dropdown-menu li a").click(function(){
+    $("#themedrop .dropdown-menu li a").click(function(e){
+        e.preventDefault();
         $(this).parents(".dropdown").find(".btn").html($(this).text() + ' <span class="caret"></span>');
         $(this).parents(".dropdown").find(".btn").attr('value', $(this).attr('value'));
         themeurl = themes[$(this).attr('value')]; 

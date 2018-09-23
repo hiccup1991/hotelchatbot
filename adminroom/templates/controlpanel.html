@@ -1,20 +1,50 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div id="chatPanel" class="panel panel-info">
+    <div id="themePanel" class="panel panel-info">
         <div class="panel-heading">
-            <strong><span class="glyphicon glyphicon-globe"></span> ThemePanel </strong>
+            <strong><span class="glyphicon glyphicon-globe"></span> Select Theme </strong>
         </div>
         <div id="theme-list-div" class="panel-body fixed-panel">
-            <div id="themedrop" class="dropdown">
+            <div id="themedrop" class="dropdown pull-right">
                 <button class="btn btn-info dropdown-toggle" value = "en" type="button" id="theme-menu" data-toggle="dropdown">Default<span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="language-menu">
-                    <li role="presentation"><a role="menuitem" value = "default" tabindex="-1">Default</a></li>
-                    <li role="presentation"><a role="menuitem" value = "cerulean" tabindex="-1">Cerulean</a></li>
-                    <li role="presentation"><a role="menuitem" value = "cosmo" tabindex="-1">Cosmo</a></li>
-                    <li role="presentation"><a role="menuitem" value = "cyborg" tabindex="-1">Cyborg</a></li>
+                    <li role="presentation"><a href="" role="menuitem" value = "default" tabindex="-1">Default</a></li>
+                    <li role="presentation"><a href="" role="menuitem" value = "cerulean" tabindex="-1">Cerulean</a></li>
+                    <li role="presentation"><a href="" role="menuitem" value = "cosmo" tabindex="-1">Cosmo</a></li>
+                    <li role="presentation"><a href="" role="menuitem" value = "cyborg" tabindex="-1">Cyborg</a></li>
                 </ul>
             </div>   
+        </div>
+    </div>
+    <div id="botResponsePanel" class="panel panel-info">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-globe"></span> Bot Response </strong>
+        </div>
+        <div id="botresponseadd" class="panel-body fixed-panel">
+                <div>
+                    <label for="pattern">Pattern</label>
+                    <input type="text" class="form-control" id="pattern">
+                </div>
+                <div>
+                    <label for="response">Response</label>
+                    <input type="text" class="form-control" id="response">
+                </div>
+                <button class="btn btn-primary pull-right" style="margin-top:5px;"><span class="glyphicon glyphicon-plus-sign"></span> Add</button>
+            </form>
+        </div>
+        <hr/>
+        <div id="botresponseupdate" class="panel-body fixed-panel">
+            <div>
+                <label for="pattern">Pattern</label>
+                <input type="text" class="form-control" id="pattern">
+            </div>
+            <div>
+                <label for="response">Response</label>
+                <input type="text" class="form-control" id="response">
+            </div>
+            <button class="btn btn-danger pull-right" style="margin-top:5px;"><span class="glyphicon glyphicon-erase"></span> Remove</button>
+            <button class="btn btn-warning pull-right" style="margin-right: 10px;margin-top:5px;"><span class="glyphicon glyphicon-edit"></span> Edit</button>       
         </div>
     </div>
 {% endblock %}   
