@@ -1,20 +1,20 @@
 
 h1, h2, h3, h4 {
     text-align: center;
-    color: rgb(6, 153, 211);
+    /*color: rgb(6, 153, 211);*/
 }
-.panel-heading h3, .panel-heading h4 {
+/* .panel-heading h3, .panel-heading h4 {
     color: #337ab7; 
-}
+} */
 .top-menu{
     float: right;
     margin-right: 20px;
     font-size: 26px;
 }
 
-label, .hint-text{
+/* label, .hint-text{
     color: rgb(6, 153, 211);
-}
+} */
 
 #exit-room{
     float: right;
@@ -26,5 +26,5 @@ label, .hint-text{
 
 #mutenotice {
     align-content: center;
-}
+} 
 

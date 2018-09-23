@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth import login, logout, authenticate
-from chatbot.models import ChatBotHistory, CustomUser, Message, Room
+from chatbot.models import ChatBotHistory, CustomUser, Message, Room, Theme, CurrentTheme
 
 # encoding=utf8  
 import sys  
@@ -57,7 +57,8 @@ def translate (text, params):
 def selectedroom(request, pk):
     instance = get_object_or_404(Room, pk=pk)
     messages = Message.objects.filter(room = instance)
-    return render(request, 'chatroom.html', {'messages': messages, 'pk': instance.pk})
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'chatroom.html', {'messages': messages, 'pk': instance.pk, 'theme': theme.theme})
 
 @login_required
 def sendmessage(request, pk):
@@ -73,19 +74,23 @@ def sendmessage(request, pk):
 @login_required
 def select_room(request):
     rooms = Room.objects.filter(is_active = True).filter(name__contains=request.user.role)
-    return render(request, 'select_room.html', {'livechatrooms': rooms})
+    customers = CustomUser.objects.filter(role="customer")
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'select_room.html', {'livechatrooms': rooms, 'customers': customers, 'theme': theme.theme})
 
 @login_required
 def livechatrooms(request):
     rooms = Room.objects.filter(is_active = True).filter(name__contains=request.user.role)
     customers = CustomUser.objects.filter(role="customer")
-    return render(request, 'livechatrooms.html', {'livechatrooms': rooms, 'customers': customers})    
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'livechatrooms.html', {'livechatrooms': rooms, 'customers': customers, 'theme': theme.theme})    
 
 @login_required
 def messages(request, pk):
     instance = get_object_or_404(Room, pk=pk)
     messages = Message.objects.filter(room = instance)
-    return render(request, 'messages.html', {'messages': messages})
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'messages.html', {'messages': messages, 'theme': theme.theme})
 
 @login_required
 def exitroom(request):
@@ -108,3 +113,18 @@ def messageclear(request, pk):
     messages = Message.objects.filter(room = instance)
     messages.delete()
     return JsonResponse({'status':'OK'})
+
+@login_required
+def changetheme(request):
+    if request.POST:
+        name = request.POST.get("theme", "")
+        theme = get_object_or_404(Theme, name=name)
+        CurrentTheme.objects.filter(pk = 1).update(theme=theme)
+        return JsonResponse({'status':'OK'})
+    else:
+        return HttpResponse("request must be post")
+
+@login_required
+def controlpanel(request):
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'controlpanel.html', {'theme': theme.theme})

@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import ChatBotHistory, CustomUser, Message, Room
+from .models import ChatBotHistory, CustomUser, Message, Room, Theme, CurrentTheme
 
 # encoding=utf8  
 import sys  
@@ -65,7 +65,8 @@ def login_user(request):
                     return redirect('/')
                 else:
                     return redirect('/service/')
-    return render(request, 'registration/login.html')
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'registration/login.html', {'theme': theme.theme })
 
 def signup(request):
     if request.method == 'POST':
@@ -82,11 +83,13 @@ def signup(request):
                 return redirect('/service/')
     else:
         form = CustomUserCreationForm()
-    return render(request, 'registration/signup.html', {'form': form})
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'registration/signup.html', {'form': form, 'theme': theme.theme})
 
 @login_required
 def select_room(request):
-    return render(request, 'chatbot/select_room.html')
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'chatbot/select_room.html', {'theme': theme.theme})
 
 @login_required
 def frontdesk(request):
@@ -97,7 +100,8 @@ def frontdesk(request):
         instance.save()
     except:
         instance = Room.objects.create(name = name, is_active = True)
-    return render(request, 'chatbot/frontdesk.html')
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'chatbot/frontdesk.html', {'theme': theme.theme})
 
 @login_required
 def concierge(request):
@@ -108,7 +112,8 @@ def concierge(request):
         instance.save()
     except:
         instance = Room.objects.create(name = name, is_active = True)
-    return render(request, 'chatbot/concierge.html')
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'chatbot/concierge.html', {'theme': theme.theme})
 
 
 @login_required
@@ -120,7 +125,8 @@ def activitiesdesk(request):
         instance.save()
     except:
         instance = Room.objects.create(name = name, is_active = True)
-    return render(request, 'chatbot/activitiesdesk.html')
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'chatbot/activitiesdesk.html', {'theme': theme.theme})
 
 @login_required
 def operator(request):
@@ -131,7 +137,8 @@ def operator(request):
         instance.save()
     except:
         instance = Room.objects.create(name = name, is_active = True)
-    return render(request, 'chatbot/operator.html')
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'chatbot/operator.html', {'theme': theme.theme})
 
 @login_required
 def reservations(request):
@@ -142,8 +149,8 @@ def reservations(request):
     else:
         instance = ChatBotHistory.objects.create(user = request.user, usertext = "", bottext = "Hi, " + request.user.username)
     instances.append(instance)
-    # return render(request, 'chatbot/reservations.html', {'histories': histories})
-    return render(request, 'chatbot/reservations.html', {'histories': instances})
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'chatbot/reservations.html', {'histories': instances, 'theme': theme.theme})
 
 @login_required
 def frontdeskask(request):
@@ -214,28 +221,32 @@ def frontdeskmessages(request):
     roomname = request.user.username + "frontdesk"
     instance = Room.objects.get(name = roomname)
     messages = Message.objects.filter(room = instance)
-    return render(request, 'chatbot/messages.html', {'messages': messages})
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'chatbot/messages.html', {'messages': messages, 'theme': theme.theme})
 
 @login_required
 def conciergemessages(request):
     roomname = request.user.username + "concierge"
     instance = Room.objects.get(name = roomname)
     messages = Message.objects.filter(room = instance)
-    return render(request, 'chatbot/messages.html', {'messages': messages})
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'chatbot/messages.html', {'messages': messages, 'theme': theme.theme})
 
 @login_required
 def activitiesdeskmessages(request):
     roomname = request.user.username + "activitiesdesk"
     instance = Room.objects.get(name = roomname)
     messages = Message.objects.filter(room = instance)
-    return render(request, 'chatbot/messages.html', {'messages': messages})
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'chatbot/messages.html', {'messages': messages, 'theme': theme.theme})
 
 @login_required
 def operatormessages(request):
     roomname = request.user.username + "operator"
     instance = Room.objects.get(name = roomname)
     messages = Message.objects.filter(room = instance)
-    return render(request, 'chatbot/messages.html', {'messages': messages})
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'chatbot/messages.html', {'messages': messages, 'theme': theme.theme})
 
 @login_required
 def exitroom(request, roomtype):
@@ -279,7 +290,8 @@ def activitiesdeskmessageclear(request):
 @login_required
 def incomingchat(request):
     incomingchats = Room.objects.filter(name__startswith=request.user.username).filter(is_active = True)
-    return render(request, 'chatbot/incomingchat.html', {'incomingchats': incomingchats})    
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    return render(request, 'chatbot/incomingchat.html', {'incomingchats': incomingchats, 'theme': theme.theme})    
 
 @login_required
 def selectincomingchat(request, roomname):

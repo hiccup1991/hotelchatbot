@@ -47,3 +47,12 @@ class Message(models.Model):
 
     class Meta:
         ordering = ['timestamp']
+
+class Theme(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class CurrentTheme(models.Model):
+    theme = models.ForeignKey(Theme, on_delete=models.CASCADE)

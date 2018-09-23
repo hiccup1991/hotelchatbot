@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div id="chatPanel" class="panel panel-info">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-globe"></span> ThemePanel </strong>
+        </div>
+        <div id="theme-list-div" class="panel-body fixed-panel">
+            <div id="themedrop" class="dropdown">
+                <button class="btn btn-info dropdown-toggle" value = "en" type="button" id="theme-menu" data-toggle="dropdown">Default<span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="language-menu">
+                    <li role="presentation"><a role="menuitem" value = "default" tabindex="-1">Default</a></li>
+                    <li role="presentation"><a role="menuitem" value = "cerulean" tabindex="-1">Cerulean</a></li>
+                    <li role="presentation"><a role="menuitem" value = "cosmo" tabindex="-1">Cosmo</a></li>
+                    <li role="presentation"><a role="menuitem" value = "cyborg" tabindex="-1">Cyborg</a></li>
+                </ul>
+            </div>   
+        </div>
+    </div>
+{% endblock %}   
+{% block script %}
+    {% include 'themeswitch.html' %}
+    <script>
+        $("#theme-menu").html('{{ theme }} <span class="caret"></span>');
+        $("#theme-menu").attr('value', '{{ theme }}');
+    </script>
+{% endblock %}

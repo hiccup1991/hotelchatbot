@@ -28,7 +28,7 @@
                         {% if customer.is_authenticated %}
                             <a href="{% url 'offerchat' customer=customer.username %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-modal-window"></span> {{ customer.username }}</a>
                         {% endif %}
-                        {% endfor %}
+                    {% endfor %}
                 {% else %}
                     <a href="{% url 'adminchatroom' %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-search"></span> there is no logined customer</a>
                 {% endif %}
@@ -36,13 +36,3 @@
         </div>
     </div>
 </div>
-
-<!-- <div id="chattingroom" class="list-group">
-    {% if livechatrooms.count > 0 %}
-        {% for room in livechatrooms %}
-            <a href="{% url 'selectedroom' pk=room.pk %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-eye-open"></span> {{ room.name }}</a>
-        {% endfor %}
-    {% else %}
-        <a href="{% url 'adminchatroom' %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-search"></span> there is no chatting room</a>
-    {% endif %}
-</div> -->

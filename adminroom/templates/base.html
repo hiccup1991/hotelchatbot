@@ -4,8 +4,6 @@
     <head>
         <title>Hotel Chatroom</title>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}" type="text/css">
-        <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap-theme.min.css' %}" type="text/css">  
         <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
     </head>
     <body>
@@ -25,6 +23,18 @@
     </body>
     <script src="{% static 'jquery-1.12.0/jquery-1.12.0.min.js' %}"></script>
     <script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+    <script>
+        var themes = {
+            "default": '{% static "bootstrap-3.3.7-dist/css/bootstrap.min.css" %}',
+            "cerulean" : '{% static "bootstrap-3.3.7-dist/css/bootstrap-cerulean.min.css" %}',
+            "cosmo" : '{% static "bootstrap-3.3.7-dist/css/bootstrap-cosmo.min.css" %}',
+            "cyborg" : '{% static "bootstrap-3.3.7-dist/css/bootstrap-cyborg.min.css" %}'
+        }
+        var themesheet = $('<link href="'+ themes['{{ theme }}'] + '" rel="stylesheet" />');
+        themesheet.appendTo('head');
+        var themeurl = themes['{{ theme }}']; 
+        themesheet.attr('href', themeurl);
+    </script>
     {% block script %}
     {% endblock %}
 </html>
