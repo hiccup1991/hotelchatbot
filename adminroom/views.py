@@ -121,6 +121,7 @@ def messageclear(request, pk):
 def changetheme(request):
     if request.POST:
         name = request.POST.get("theme", "")
+        print(name)
         theme = get_object_or_404(Theme, name=name)
         CurrentTheme.objects.filter(pk = 1).update(theme=theme)
         return JsonResponse({'status':'OK'})

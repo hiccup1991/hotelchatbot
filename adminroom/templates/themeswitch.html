@@ -9,7 +9,7 @@
             type: "POST",
             url: "/service/changetheme/",
             headers: {'X-CSRFToken': '{{ csrf_token }}'},
-            data:  "theme=" + $(this).attr('value'),
+            data:  "theme=" + $(this).text(),
             success: function(response) {
                 console.log(response);
                 themesheet.attr('href', themeurl);

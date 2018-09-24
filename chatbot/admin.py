@@ -1,13 +1,11 @@
-# from django.contrib import admin
-# from django.contrib.auth import get_user_model
-# from django.contrib.auth.admin import UserAdmin
+from django.contrib import admin
 
-# from .forms import CustomUserCreationForm, CustomUserChangeForm
-# from .models import CustomUser
+from .models import CustomUser, Theme, CurrentTheme, Message, Room, ChatBotHistory
 
-# class CustomUserAdmin(UserAdmin):
-#     add_form = CustomUserCreationForm
-#     form = CustomUserChangeForm
-#     model = CustomUser
+admin.site.register(CustomUser)
+admin.site.register(Theme)
+admin.site.register(CurrentTheme)
+admin.site.register(Message)
+admin.site.register(Room)
+admin.site.register(ChatBotHistory)
 
-# admin.site.register(CustomUser, CustomUserAdmin)
