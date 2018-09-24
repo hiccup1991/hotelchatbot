@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^service/deletefrombot/$', views.deletefrombot, name='deletefrombot'),
     url(r'^service/getbotdata/$', views.getbotdata, name='getbotdata'),
     url(r'^service/botlearn/$', views.botlearn, name='botlearn'),
+    url(r'^service/changeroomname/$', views.changeroomname, name='changeroomname'),
 ]

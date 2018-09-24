@@ -100,7 +100,7 @@ def frontdesk(request):
         instance.is_active = True
         instance.save()
     except:
-        instance = Room.objects.create(name = name, is_active = True)
+        instance = Room.objects.create(name = name, alias = name, is_active = True)
     theme = get_object_or_404(CurrentTheme, pk=1)
     return render(request, 'chatbot/frontdesk.html', {'theme': theme.theme})
 
@@ -112,7 +112,7 @@ def concierge(request):
         instance.is_active = True
         instance.save()
     except:
-        instance = Room.objects.create(name = name, is_active = True)
+        instance = Room.objects.create(name = name, alias = name, is_active = True)
     theme = get_object_or_404(CurrentTheme, pk=1)
     return render(request, 'chatbot/concierge.html', {'theme': theme.theme})
 
@@ -125,7 +125,7 @@ def activitiesdesk(request):
         instance.is_active = True
         instance.save()
     except:
-        instance = Room.objects.create(name = name, is_active = True)
+        instance = Room.objects.create(name = name, alias = name, is_active = True)
     theme = get_object_or_404(CurrentTheme, pk=1)
     return render(request, 'chatbot/activitiesdesk.html', {'theme': theme.theme})
 
@@ -137,7 +137,7 @@ def operator(request):
         instance.is_active = True
         instance.save()
     except:
-        instance = Room.objects.create(name = name, is_active = True)
+        instance = Room.objects.create(name = name, alias = name, is_active = True)
     theme = get_object_or_404(CurrentTheme, pk=1)
     return render(request, 'chatbot/operator.html', {'theme': theme.theme})
 

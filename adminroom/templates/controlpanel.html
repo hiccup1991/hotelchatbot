@@ -54,12 +54,55 @@
             </div>
         </div>
     </div>
+    <div id="roomNamePanel" class="panel panel-info">
+        <div class="panel-heading">
+            <strong><span class="glyphicon glyphicon-globe"></span> Room Names </strong>
+        </div>
+        <div id="botresponseupdate" class="panel-body fixed-panel row">
+            <div style="padding:10px;">
+                <label for="room-list">Rooms</label>
+                <div id="room-list" class="list-group" style="max-height:300px; overflow: scroll;">
+                    {% for room in rooms %}
+                        <li class="list-group-item" contenteditable="true" value="{{ room.pk }}">{{ room.alias }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-8">
+                <button id="changeroomname" class="btn btn-warning btn-block" style="margin-right: 10px;margin-top:5px;"><span class="glyphicon glyphicon-record"></span> Save</button>       
+            </div>
+        </div>
+    </div>
 {% endblock %}   
 {% block script %}
     {% include 'themeswitch.html' %}
     <script>
         $("#theme-menu").html('{{ theme }} <span class="caret"></span>');
         $("#theme-menu").attr('value', '{{ theme }}');
+        $('#changeroomname').click(function(e){
+            e.preventDefault();
+            var req='roomlist=';
+            $("#room-list>li").each(function(){
+                req += $(this).val();
+                req += '|';
+                req += $(this).text();
+                req += ':';
+            });
+            req = req.substring(0, req.length - 1);
+            alert(req);
+            $.ajax({
+                type: "POST",
+                url: "/service/changeroomname/",
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                data: req,
+                success: function(response) {
+                    alert(response.status);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
         $('#addtobot').click(function(e){
             if($('#pattern').val() == "") return;
             if($('#response').val() == "") return;

@@ -34,9 +34,10 @@ class Room(models.Model):
     name = models.CharField(max_length=40, unique=True)
     members = models.ManyToManyField(CustomUser, related_name="rooms")
     is_active = models.BooleanField(default=False)
-
+    alias = models.CharField(max_length=40, unique=True)
     def __str__(self):
         return self.name
+
 
 class Message(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)

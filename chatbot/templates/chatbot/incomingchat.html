@@ -5,7 +5,7 @@
     </div>
     <div class="panel-body fixed-panel">
         {% for incomingchat in incomingchats %}
-            <a href = "{% url 'selectincomingchat' roomname=incomingchat.name %}" class="btn btn-primary btn-block">{{ incomingchat.name }}</a>
+            <a href = "{% url 'selectincomingchat' roomname=incomingchat.name %}" class="btn btn-primary btn-block">{{ incomingchat.alias }}</a>
         {% endfor %}
     </div>
 </div>

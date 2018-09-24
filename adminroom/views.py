@@ -107,7 +107,7 @@ def offerchat(request, customer):
         instance.is_active = True
         instance.save()
     except:
-        instance = Room.objects.create(name = name, is_active = True)
+        instance = Room.objects.create(name = name, alias = name, is_active = True)
     return redirect('selectedroom', pk=instance.pk)
 
 @login_required
@@ -132,11 +132,12 @@ def changetheme(request):
 def controlpanel(request):
     theme = get_object_or_404(CurrentTheme, pk=1)
     themes = Theme.objects.all()
+    rooms = Room.objects.all()
     file=open(os.path.abspath("aiml/additional/hotel.aiml"), "r")
     xmlString = file.read()
     jsonDump = json.dumps(xmltodict.parse(xmlString))
 
-    return render(request, 'controlpanel.html', {'theme': theme.theme, 'themes': themes })
+    return render(request, 'controlpanel.html', {'theme': theme.theme, 'themes': themes, 'rooms': rooms })
 
 @login_required
 def addtobot(request):
@@ -204,6 +205,18 @@ def botlearn(request):
     kernel.bootstrap(learnFiles = os.path.abspath("aiml/std-startup.xml"), commands = "load aiml b")
     kernel.saveBrain("bot_brain.brn")
     return JsonResponse({'status': 'successfully learned'})
+
+@login_required
+def changeroomname(request):
+    roomlist = request.POST.get("roomlist", "")
+    print(roomlist)
+    roomnames=roomlist.split(':')
+    print(roomnames)
+    for name in roomnames:
+        print(name)
+        pk,alias=name.split('|')
+        Room.objects.filter(pk = pk).update(alias=alias)
+    return JsonResponse({'status': 'successfully changed'})
 
 
  
