@@ -1,0 +1,20 @@
+<aiml version="1.0">
+
+<category><pattern>AAA</pattern><template><random>
+<li>What kind of room do you want? Single or double.</li>
+</random>
+</template>
+</category>
+
+<category>
+<pattern>ABC</pattern>
+<template>
+<random>
+<li>Single room is $100 a day.</li>
+</random>
+</template>
+</category>
+<category><pattern>DO YOU KNOW TAKESHI</pattern><template><random><li>He is talented developer</li></random></template></category>
+<category><pattern>TAKESHI IS GREAT</pattern><template><random><li>yes, he is very great.</li></random></template></category>
+
+<category><pattern>I WANT TO WORK WITH FERNANDO</pattern><template><random><li>Good idea. Fernando is good client.</li></random></template></category></aiml>

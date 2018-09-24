@@ -13,4 +13,8 @@ urlpatterns = [
     url(r'^service/translate/$', views.reqtranslate, name='reqtranslate'),
     url(r'^service/changetheme/$', views.changetheme, name='changetheme'),
     url(r'^service/controlpanel/$', views.controlpanel, name='controlpanel'),
+    url(r'^service/addtobot/$', views.addtobot, name='addtobot'),
+    url(r'^service/deletefrombot/$', views.deletefrombot, name='deletefrombot'),
+    url(r'^service/getbotdata/$', views.getbotdata, name='getbotdata'),
+    url(r'^service/botlearn/$', views.botlearn, name='botlearn'),
 ]

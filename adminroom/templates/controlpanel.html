@@ -9,42 +9,49 @@
             <div id="themedrop" class="dropdown pull-right">
                 <button class="btn btn-info dropdown-toggle" value = "en" type="button" id="theme-menu" data-toggle="dropdown">Default<span class="caret"></span></button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="language-menu">
-                    <li role="presentation"><a href="" role="menuitem" value = "default" tabindex="-1">Default</a></li>
-                    <li role="presentation"><a href="" role="menuitem" value = "cerulean" tabindex="-1">Cerulean</a></li>
-                    <li role="presentation"><a href="" role="menuitem" value = "cosmo" tabindex="-1">Cosmo</a></li>
-                    <li role="presentation"><a href="" role="menuitem" value = "cyborg" tabindex="-1">Cyborg</a></li>
+                    {% for item in themes %}
+                        <li role="presentation"><a href="" role="menuitem" value = "default" tabindex="-1">{{ item }}</a></li>
+                    {% endfor %}
                 </ul>
-            </div>   
+            </div>  
         </div>
     </div>
     <div id="botResponsePanel" class="panel panel-info">
         <div class="panel-heading">
             <strong><span class="glyphicon glyphicon-globe"></span> Bot Response </strong>
         </div>
-        <div id="botresponseadd" class="panel-body fixed-panel">
-                <div>
-                    <label for="pattern">Pattern</label>
-                    <input type="text" class="form-control" id="pattern">
-                </div>
-                <div>
-                    <label for="response">Response</label>
-                    <input type="text" class="form-control" id="response">
-                </div>
-                <button class="btn btn-primary pull-right" style="margin-top:5px;"><span class="glyphicon glyphicon-plus-sign"></span> Add</button>
-            </form>
-        </div>
-        <hr/>
-        <div id="botresponseupdate" class="panel-body fixed-panel">
-            <div>
+        <div id="botresponseadd" class="panel-body fixed-panel row">
+            <div style="padding:10px;">
                 <label for="pattern">Pattern</label>
                 <input type="text" class="form-control" id="pattern">
             </div>
-            <div>
+            <div style="padding:10px;">
                 <label for="response">Response</label>
                 <input type="text" class="form-control" id="response">
             </div>
-            <button class="btn btn-danger pull-right" style="margin-top:5px;"><span class="glyphicon glyphicon-erase"></span> Remove</button>
-            <button class="btn btn-warning pull-right" style="margin-right: 10px;margin-top:5px;"><span class="glyphicon glyphicon-edit"></span> Edit</button>       
+            <div class="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-8">
+                <button id="addtobot" class="btn btn-primary btn-block" style="margin-top:5px;"><span class="glyphicon glyphicon-plus-sign"></span> Add</button>
+            </div> 
+        </div>
+        <hr/>
+        <div id="botresponseupdate" class="panel-body fixed-panel row">
+            <div style="padding:10px;">
+                <label for="pattern-list">Patterns</label>
+                <div id="pattern-list" class="list-group" style="max-height:300px; overflow: scroll;">
+                </div>
+            </div>
+            <div style="padding:10px;">
+                <label for="template-list">Responses</label>
+                <div id="template-list" class="list-group" style="max-height:300px; overflow: scroll;">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-4">
+                <button id="botlearn" class="btn btn-warning btn-block" style="margin-right: 10px;margin-top:5px;"><span class="glyphicon glyphicon-record"></span> Learn</button>       
+            </div>
+            <div class="col-xs-12 col-xs-offset-0 col-sm-4 col-sm-offset-0">
+                <button id="deletefrombot" class="btn btn-danger btn-block" style="margin-top:5px;"><span class="glyphicon glyphicon-erase"></span> Remove</button>
+            </div>
         </div>
     </div>
 {% endblock %}   
@@ -53,5 +60,99 @@
     <script>
         $("#theme-menu").html('{{ theme }} <span class="caret"></span>');
         $("#theme-menu").attr('value', '{{ theme }}');
+        $('#addtobot').click(function(e){
+            if($('#pattern').val() == "") return;
+            if($('#response').val() == "") return;
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/service/addtobot/",
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                data: "pattern="+$('#pattern').val()+"&template="+$('#response').val(),
+                success: function(response) {
+                    alert(response.status);
+
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+        $('#botlearn').click(function(e){
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/service/botlearn/",
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                data: '',
+                success: function(response) {
+                    alert(response.status);
+                    getBotData();
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+        $('#deletefrombot').click(function(e){
+            e.preventDefault();
+            if($('#template-list').find('.active').text()=="")return;
+            if($('#pattern-list').find('.active').text()=="")return;
+            $.ajax({
+                type: "POST",
+                url: "/service/deletefrombot/",
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                data: "pattern=" + $('#pattern-list').find('.active').text() + "&template=" + $('#template-list').find('.active').text(),
+                success: function(response) {
+                    alert(response.status);
+                    getBotData();
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+        function getBotData(){
+            $.ajax({
+                type: "POST",
+                url: "/service/getbotdata/",
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                data: "",
+                success: function(response) {
+                    showBotPattern(response.aiml.category);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+        function showBotPattern(obj){
+            $('#pattern-list').html("");
+            for (var p in obj){
+                var patname = '';
+                for (var pattemp in obj[p]){
+                    if(pattemp == "pattern"){
+                        patname = obj[p][pattemp];
+                    }
+                    else{
+                        $('#pattern-list').append($("<button>" + patname + "</button>").addClass("list-group-item").click({template: obj[p][pattemp]}, showBotTemplate));
+                    }
+                }
+            }
+        }
+        function showBotTemplate(e){
+            $('#template-list').html("");
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
+            var obj = e.data.template;
+            for (var p in obj){
+                for (var pattemp in obj[p]){
+                    var templist = obj[p][pattemp].toString().split(',');
+                    for(var i = 0; i < templist.length; i++)
+                        $('#template-list').append($("<button>" + templist[i] + "</button>").addClass("list-group-item").click(function(e){e.preventDefault();$(this).addClass('active');$(this).siblings().removeClass('active');}));
+                }
+            }
+        }
+        getBotData();
     </script>
 {% endblock %}

@@ -22,6 +22,9 @@ import httplib
 from urlparse import urlparse
 import uuid, json
 
+import xml.etree.ElementTree as ET
+import xmltodict
+
 def reqtranslate(request):
     src = request.POST.get("src", "")
     tg = request.POST.get("tg", "")
@@ -127,4 +130,79 @@ def changetheme(request):
 @login_required
 def controlpanel(request):
     theme = get_object_or_404(CurrentTheme, pk=1)
-    return render(request, 'controlpanel.html', {'theme': theme.theme})
+    themes = Theme.objects.all()
+    file=open(os.path.abspath("aiml/additional/hotel.aiml"), "r")
+    xmlString = file.read()
+    jsonDump = json.dumps(xmltodict.parse(xmlString))
+
+    return render(request, 'controlpanel.html', {'theme': theme.theme, 'themes': themes })
+
+@login_required
+def addtobot(request):
+    pattern = request.POST.get("pattern", "")
+    pattern = pattern.upper()
+    template = request.POST.get("template", "")
+    tree = ET.parse(os.path.abspath("aiml/additional/hotel.aiml"))
+    root = tree.getroot()
+    for elem in root.findall('category'):
+        if pattern == elem[0].text:
+            for li in elem[1][0]:
+                print(li.text)
+                if li.text == template:
+                    return JsonResponse({'status':'Already exist'})
+            li=ET.SubElement(elem[1][0],'li')
+            li.text=template
+            # mydata = ET.tostring(root)
+            # myfile=open(os.path.abspath("aiml/additional/hotel.aiml"), "w")
+            # myfile.write(mydata)
+            tree.write(os.path.abspath("aiml/additional/hotel.aiml"))
+            return JsonResponse({'status':'New template has been added'})
+    category=ET.Element('category')
+    pat=ET.SubElement(category, 'pattern')
+    pat.text=pattern
+    temp=ET.SubElement(category, 'template')
+    rand=ET.SubElement(temp, 'random')
+    li=ET.SubElement(rand, 'li')
+    li.text=template
+    root.append(category)
+    # mydata = ET.tostring(root)
+    # myfile=open(os.path.abspath("aiml/additional/hotel.aiml"), "w")
+    # myfile.write(mydata)
+    tree.write(os.path.abspath("aiml/additional/hotel.aiml"))
+    return JsonResponse({'status':'New pattern has been added'})
+
+@login_required
+def deletefrombot(request):
+    pattern = request.POST.get("pattern", "")
+    template = request.POST.get("template", "")
+    tree = ET.parse(os.path.abspath("aiml/additional/hotel.aiml"))
+    root = tree.getroot()
+    for elem in root.findall('category'):
+        if pattern == elem[0].text:
+            for li in elem[1][0]:
+                print(li.text)
+                if li.text == template:
+                    elem[1][0].remove(li)
+                    tree.write(os.path.abspath("aiml/additional/hotel.aiml"))
+                    return JsonResponse({'status':'Successfully deleted'})
+    return JsonResponse({'status':'No exist'})
+
+@login_required
+def getbotdata(request):
+    file=open(os.path.abspath("aiml/additional/hotel.aiml"), "r")
+    xmlString = file.read()
+    jsonString = json.dumps(xmltodict.parse(xmlString))
+    temp = json.loads(jsonString)
+    return JsonResponse(temp)
+
+@login_required
+def botlearn(request):
+    kernel = aiml.Kernel()
+    if os.path.isfile("bot_brain.brn"):
+        os.remove(os.path.abspath("bot_brain.brn"))
+    kernel.bootstrap(learnFiles = os.path.abspath("aiml/std-startup.xml"), commands = "load aiml b")
+    kernel.saveBrain("bot_brain.brn")
+    return JsonResponse({'status': 'successfully learned'})
+
+
+ 
