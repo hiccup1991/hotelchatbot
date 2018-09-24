@@ -4,11 +4,11 @@
     <form id="login-form" method="post" action="{% url 'login' %}">
         {% csrf_token %}
         <div class="row">
-            <div class="col-sm-4 col-xs-12" style="padding:10px;"><label for="id_username">Username</label></div>
-            <div class="col-sm-8 col-xs-12" style="padding:10px;"><input id="id_username" name="username" type="text" class="form-control"></div>
+            <div class="col-md-4 col-sm-12 col-xs-12" style="padding:10px;"><label for="id_username">Username</label></div>
+            <div class="col-md-8 col-sm-12 col-xs-12" style="padding:10px;"><input id="id_username" name="username" type="text" class="form-control"></div>
             
-            <div class="col-sm-4 col-xs-12" style="padding:10px;"><label for="id_password">Password</div>
-            <div class="col-sm-8 col-xs-12" style="padding:10px;"><input id="id_password" name="password" type="password" class="form-control"></div>
+            <div class="col-md-4 col-sm-12 col-xs-12" style="padding:10px;"><label for="id_password">Password</div>
+            <div class="col-md-8 col-sm-12 col-xs-12" style="padding:10px;"><input id="id_password" name="password" type="password" class="form-control"></div>
         
             {% if form.errors %}
                 
@@ -25,8 +25,8 @@
                     </div>
                 {% endfor %}
             {% endif %}
-            <div class="col-sm-8 col-xs-12" style="padding:10px;">Do you want an account? <a href="{% url 'signup' %}">Signup</a></div>
-            <div class="col-sm-4 col-xs-12" style="padding:10px;">
+            <div class="col-md-8 col-sm-12 col-xs-12" style="padding:10px;">Do you want an account? <a href="{% url 'signup' %}">Signup</a></div>
+            <div class="col-md-4 col-sm-12 col-xs-12" style="padding:10px;">
                 <input type="submit" value="Login"  class="btn btn-primary btn-block" style="margin-right: 10px;"/>
             </div>  
         </div>
