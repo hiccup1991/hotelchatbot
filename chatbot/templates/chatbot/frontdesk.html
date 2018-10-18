@@ -120,10 +120,10 @@
                             <button id="lefttranslate" class="btn btn-info btn-block" type="button"><span class="glyphicon glyphicon-arrow-left"></span></button>
                         </div>
                         <div class="hidden-md hidden-lg col-xs-2 col-xs-offset-4 col-sm-2 col-sm-offset-4" style="padding:10px;">
-                            <button id="righttranslate" class="btn btn-info btn-block" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                            <button id="righttranslate_m" class="btn btn-info btn-block" type="button"><span class="glyphicon glyphicon-arrow-down"></span></button>
                         </div>
                         <div class="hidden-md hidden-lg col-xs-2 col-xs-offset-0 col-sm-2 col-sm-offset-0" style="padding:10px;">
-                            <button id="lefttranslate" class="btn btn-info btn-block" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                            <button id="lefttranslate_m" class="btn btn-info btn-block" type="button"><span class="glyphicon glyphicon-arrow-up"></span></button>
                         </div>
                     </div>
                 </div>
@@ -227,7 +227,45 @@
                 }
             });
         });
+        $('#righttranslate_m').click(function(e) {
+            e.preventDefault();
+            var req = 'src='+$("#text1drop .btn").attr('value')+'&tg='+$("#text2drop .btn").attr('value')+'&text='+$("#text1").val();
+            //alert(req);
+            $.ajax({
+                type: "POST",
+                url: "/translate/",
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                data: req,
+                success: function(response) {
+                    result = response.result;
+                    //alert(result);
+                    $('#text2').val(result);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
         $('#lefttranslate').click(function(e) {
+            e.preventDefault();
+            var req = 'src='+$("#text2drop .btn").attr('value')+'&tg='+$("#text1drop .btn").attr('value')+'&text='+$("#text2").val();
+            //alert(req);
+            $.ajax({
+                type: "POST",
+                url: "/translate/",
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                data: req,
+                success: function(response) {
+                    result = response.result;
+                    //alert(result);
+                    $('#text1').val(result);
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+        $('#lefttranslate_m').click(function(e) {
             e.preventDefault();
             var req = 'src='+$("#text2drop .btn").attr('value')+'&tg='+$("#text1drop .btn").attr('value')+'&text='+$("#text2").val();
             //alert(req);

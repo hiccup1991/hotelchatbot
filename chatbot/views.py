@@ -29,7 +29,7 @@ def reqtranslate(request):
  
 
 def translate (text, params):
-    subscriptionKey = 'f6620d6414c24f40a96fab96b7ec9fe2'
+    subscriptionKey = '65f6252ec2d64e4c8e54f3932881787d'
     host = 'api.cognitive.microsofttranslator.com'
     path = '/translate?api-version=3.0'
     # params = "&to=es"
