@@ -7,19 +7,47 @@
             <div class="col-xs-12 col-sm-12 col-md-4" style="padding:10px;"><label for="id_username">Username</label></div>
             <div class="col-xs-12 col-sm-12 col-md-8" style="padding:10px;"><input id="id_username" name="username" type="text" class="form-control"></div>
 
+            <div class="col-xs-12 col-sm-12 col-md-4" style="padding:10px;"><label for="id_email">Email</label></div>
+            <div class="col-xs-12 col-sm-12 col-md-8" style="padding:10px;"><input id="id_email" name="email" type="text" class="form-control"></div>
+
             <div class="col-xs-12 col-sm-12 col-md-4" style="padding:10px;"><label for="id_role">Role</label></div>
             <div class="col-xs-12 col-sm-12 col-md-8" style="padding:10px;"><select id="id_role" name="role" class="form-control">
                 {% for value, text in form.fields.role.choices %}
                     <option value="{{ value }}">{{ text }}</option>
                 {% endfor %}
             </select></div>
+
+            <div class="col-xs-12 col-sm-12 col-md-4" style="padding:10px;"><label for="id_roomnumber">Room No</label></div>
+            <div class="col-xs-12 col-sm-12 col-md-8" style="padding:10px;"><input id="id_roomnumber" name="roomnumber" type="text" class="form-control"></div>
+
+            <div class="col-xs-12 col-sm-12 col-md-4" style="padding:10px;"><label for="id_checkindatetime">Checkin Date&Time</label></div>
+            <div class="col-xs-12 col-sm-12 col-md-8" style="padding:10px;">
+                <div class="input-group date" id="checkin_datetime">
+                    <input id="id_checkindatetime" name="checkindatetime" type="text" class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>       
+            </div>       
+            <div class="col-xs-12 col-sm-12 col-md-4" style="padding:10px;"><label for="id_checkoutdatetime">Checkout Date&Time</label></div>     
+            <div class="col-xs-12 col-sm-12 col-md-8" style="padding:10px;">
+                <div class='input-group date' id='checkout_datetime'>
+                    <input id="id_checkoutdatetime" name="checkoutdatetime" type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+
             <div class="col-xs-12 col-sm-12 col-md-4" style="padding:10px;"><label for="id_password1">Password</label></div>
             <div class="col-xs-12 col-sm-12 col-md-8" style="padding:10px;"><input id="id_password1" name="password1" type="password" class="form-control"></div>
             
             <div class="col-xs-12 col-sm-12 col-md-4" style="padding:10px;"><label for="id_password2">Password Confirm</label></div>
             <div class="col-xs-12 col-sm-12 col-md-8" style="padding:10px;"><input id="id_password2" name="password2" type="password" class="form-control"></div>
 
+            
             {% if form.errors %}
+            <div>
                 {% for field in form %}
                     {% for error in field.errors %}
                         <div class="alert alert-warning">
@@ -32,6 +60,7 @@
                         <strong>{{ error|striptags }}</strong>
                     </div>
                 {% endfor %}
+            </div>
             {% endif %}
             <div class="col-xs-12 col-sm-12 col-md-8" style="padding: 10px;">Already have an account? <a href="{% url 'login' %}">Login here</a></div>
             <div class="col-xs-12 col-sm-12 col-md-4" style="padding: 10px;">
@@ -39,4 +68,16 @@
             </div>
         </div>
     </form>  
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+    $(function () {
+        $('#checkin_datetime').datetimepicker({
+            format: 'YYYY-MM-DD HH:MM:SS'
+        });
+        $('#checkout_datetime').datetimepicker({
+            format: 'YYYY-MM-DD HH:MM:SS'
+        });
+    });
+</script>
 {% endblock %}

@@ -17,7 +17,10 @@ class CustomUser(AbstractUser):
         (OPERATOR, 'operator'),
     )
     role = models.CharField(max_length=20, choices=ROLE, default=CUSTOMER,)
-    
+    checkindatetime = models.DateTimeField(default=timezone.now)
+    checkoutdatetime = models.DateTimeField(default=timezone.now)
+    roomnumber = models.CharField(max_length = 20)
+
     def __str__(self):
         return self.username
 

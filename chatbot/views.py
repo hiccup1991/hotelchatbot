@@ -57,14 +57,16 @@ def login_user(request):
     if request.POST:
         username = request.POST['username']
         password = request.POST['password']
+        roomnumber = request.POST['roomnumber']
         user = authenticate(username = username, password = password)
         if user is not None:
             if user.is_active:
-                login(request, user)
-                if user.role == "customer":
-                    return redirect('/')
-                else:
-                    return redirect('/service/')
+                if user.roomnumber == roomnumber:
+                    login(request, user)
+                    if user.role == "customer":
+                        return redirect('/')
+                    else:
+                        return redirect('/service/')
     theme = get_object_or_404(CurrentTheme, pk=1)
     return render(request, 'registration/login.html', {'theme': theme.theme })
 

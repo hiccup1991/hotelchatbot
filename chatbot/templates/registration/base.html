@@ -6,6 +6,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+        <link rel="stylesheet" href="{% static 'bootstrap-datetimepicker/css/bootstrap-datetimepicker.css' %}">
+        <link rel="icon" href="{% static 'images/favicon.png' %}">
     </head>
     <body>
         <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
@@ -21,6 +23,8 @@
     </body>
     <script src="{% static 'jquery-1.12.0/jquery-1.12.0.min.js' %}"></script>
     <script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'moment/moment.min.js' %}"></script>
+    <script src="{% static 'bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js' %}"></script>
     <script>
         var themes = {
             "default": '{% static "bootstrap-3.3.7-dist/css/bootstrap.min.css" %}',

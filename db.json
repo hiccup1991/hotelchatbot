@@ -1,0 +1,128 @@
+[
+{
+    "model": "chatbot.theme",
+    "pk": 1,
+    "fields": {
+        "name": "default"
+    }
+},
+{
+    "model": "chatbot.theme",
+    "pk": 2,
+    "fields": {
+        "name": "cerulean"
+    }
+},
+{
+    "model": "chatbot.theme",
+    "pk": 3,
+    "fields": {
+        "name": "cosmo"
+    }
+},
+{
+    "model": "chatbot.theme",
+    "pk": 4,
+    "fields": {
+        "name": "cyborg"
+    }
+},
+{
+    "model": "chatbot.theme",
+    "pk": 5,
+    "fields": {
+        "name": "darkly"
+    }
+},
+{
+    "model": "chatbot.theme",
+    "pk": 6,
+    "fields": {
+        "name": "flatly"
+    }
+},
+{
+    "model": "chatbot.theme",
+    "pk": 7,
+    "fields": {
+        "name": "journal"
+    }
+},
+{
+    "model": "chatbot.theme",
+    "pk": 8,
+    "fields": {
+        "name": "lumen"
+    }
+},
+{
+    "model": "chatbot.theme",
+    "pk": 9,
+    "fields": {
+        "name": "paper"
+    }
+},
+{
+    "model": "chatbot.theme",
+    "pk": 10,
+    "fields": {
+        "name": "readable"
+    }
+},
+{
+    "model": "chatbot.theme",
+    "pk": 11,
+    "fields": {
+        "name": "sandstone"
+    }
+},
+{
+    "model": "chatbot.theme",
+    "pk": 12,
+    "fields": {
+        "name": "simplex"
+    }
+},
+{
+    "model": "chatbot.theme",
+    "pk": 13,
+    "fields": {
+        "name": "slate"
+    }
+},
+{
+    "model": "chatbot.theme",
+    "pk": 14,
+    "fields": {
+        "name": "spacelab"
+    }
+},
+{
+    "model": "chatbot.theme",
+    "pk": 15,
+    "fields": {
+        "name": "superhero"
+    }
+},
+{
+    "model": "chatbot.theme",
+    "pk": 16,
+    "fields": {
+        "name": "united"
+    }
+},
+{
+    "model": "chatbot.theme",
+    "pk": 17,
+    "fields": {
+        "name": "yeti"
+    }
+},
+{
+    "model": "chatbot.currenttheme",
+    "pk": 1,
+    "fields": {
+        "theme": 5
+    }
+}
+]
