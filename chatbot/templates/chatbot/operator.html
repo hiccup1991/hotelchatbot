@@ -23,8 +23,78 @@
         <div class="panel-footer">
             <form method="post" id="chatbot-form">
                 <div class="row">
-                    <div class="col-md-8 col-sm-12 col-xs-12" style="padding:5px;"><input type="text" class="form-control" placeholder="Enter Message" name="messageText" id="messageText" autofocus/></div>
+                    <div class="col-md-6 col-sm-12 col-xs-12" style="padding:5px;"><input type="text" class="form-control" placeholder="Enter Message" name="messageText" id="messageText" autofocus/></div>
                     <div class="col-md-2 col-sm-12 col-xs-12" style="padding:5px;"><button class="btn btn-info btn-block" type="button" id="chatbot-form-btn">Send <span class="glyphicon glyphicon-pencil"></span></button></div>
+                    <div id="motherlang" class="dropdown col-md-2 col-sm-12 col-xs-12" style="padding:5px;">
+                        <button class="btn btn-info dropdown-toggle" value = "en" type="button" id="language-menu" data-toggle="dropdown">English <span class="caret"></span></button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="language-menu">
+                            <li role="presentation"><a href="" role="menuitem" value = "en" tabindex="-1">English</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "af" tabindex="-1">Afrikaans</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "ar" tabindex="-1">Arabic</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "apc" tabindex="-1">Arabic, Levantine</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "bn" tabindex="-1">Bangla</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "bs" tabindex="-1">Bosnian(Latin)</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "bg" tabindex="-1">Bulgarian</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "yue" tabindex="-1">Cantonese (Traditional)</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "ca" tabindex="-1">Catalan</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "zh-Hans" tabindex="-1">Chinese Simplified</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "zh-Hant" tabindex="-1">Chinese Traditional</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "hr" tabindex="-1">Croatian</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "cs" tabindex="-1">Czech</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "da" tabindex="-1">Danish</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "nl" tabindex="-1">Dutch</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "et" tabindex="-1">Estonian</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "fj" tabindex="-1">Fijian</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "fil" tabindex="-1">Filipino</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "fi" tabindex="-1">Finnish</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "fr" tabindex="-1">French</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "de" tabindex="-1">German</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "el" tabindex="-1">Greek</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "ht" tabindex="-1">Haitian Creole</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "he" tabindex="-1">Hebrew</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "hi" tabindex="-1">Hindi</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "mww" tabindex="-1">Hmong Daw</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "hu" tabindex="-1">Hungarian</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "is" tabindex="-1">Icelandic</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "id" tabindex="-1">Indonesian</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "it" tabindex="-1">Italian</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "ja" tabindex="-1">Japanese</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "sw" tabindex="-1">Kiswahili</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "tlh" tabindex="-1">Klingon</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "tlh-Qaak" tabindex="-1">Klingon (plqaD)</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "ko" tabindex="-1">Korean</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "lv" tabindex="-1">Latvian</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "lt" tabindex="-1">Lithuanian</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "mg" tabindex="-1">Malagasy</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "ms" tabindex="-1">Malay</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "mt" tabindex="-1">Maltese</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "nb" tabindex="-1">Norwegian</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "fa" tabindex="-1">Persian</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "pl" tabindex="-1">Polish</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "pt" tabindex="-1">Portuguese</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "otq" tabindex="-1">Queretaro Otomi</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "ro" tabindex="-1">Romanian</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "ru" tabindex="-1">Russian</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "sm" tabindex="-1">Samoan</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "sr-Cyrl" tabindex="-1">Serbian (Cyrillic)</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "sr-Latn" tabindex="-1">Serbian (Latin)</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "sk" tabindex="-1">Slovak</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "sl" tabindex="-1">Slovenian</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "es" tabindex="-1">Spanish</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "sv" tabindex="-1">Swedish</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "ty" tabindex="-1">Tahitian</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "ta" tabindex="-1">Tamil</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "te" tabindex="-1">Telugu</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "th" tabindex="-1">Thai</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "to" tabindex="-1">Tongan</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "tr" tabindex="-1">Turkish</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "uk" tabindex="-1">Ukrainian</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "te" tabindex="-1">Urdu</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "vi" tabindex="-1">Vietnamese</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "cy" tabindex="-1">Welsh</a></li>
+                            <li role="presentation"><a href="" role="menuitem" value = "yua" tabindex="-1">Yucatec Maya</a></li>
+                        </ul>
+                    </div>
                     <div class="col-md-2 col-sm-12 col-xs-12" style="padding:5px;"><button class="btn btn-info btn-block" type="button" id="chatbot-form-btn-clear">Clear <span class="glyphicon glyphicon-erase"></span></button></div>
                 </div>
             </form>
@@ -316,8 +386,9 @@
         $('#chatbot-form').submit(function(e) {
             e.preventDefault();
             var message = $('#messageText').val();
+            var language=$("#motherlang .btn").attr('value');
             // $(".media-list").append('<li class="media"><div class="media-body"><div class="media"><div style = "text-align:right; color : green" class="media-body">' + message + '<hr/></div></div></div></li>');
-            var req = $(this).serialize();
+            var req = $(this).serialize()+"&language="+language;
             $.ajax({
                 type: "POST",
                 url: "/operatorask/",
@@ -338,8 +409,9 @@
         });
     });
     function getMessages(){
+        var language=$("#motherlang .btn").attr('value');
         if(!scrolling) {
-            $.get('/operator/messages/', function(messages){
+            $.get('/operator/messages/'+language, function(messages){
                 //alert(messages);
                 $('#msg-list').html(messages);
                 var chatlist = document.getElementById('msg-list-div');

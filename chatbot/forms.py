@@ -7,9 +7,10 @@ import datetime
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ('username', 'email', 'role', 'roomnumber', 'checkindatetime', 'checkoutdatetime')
+        # fields = ('username', 'email', 'role', 'roomnumber', 'checkindatetime', 'checkoutdatetime')
+        fields = ('username', 'email', 'roomnumber', 'checkindatetime', 'checkoutdatetime')
         labels = {
-            'role': _('Role'),
+            # 'role': _('Role'),
             'roomnumber': _('Room No'),
             'email': _('Email'),
             'checkindatetime': _('Checkin Date&Time'),
@@ -24,9 +25,10 @@ class CustomUserCreationForm(UserCreationForm):
 class CustomUserChangeForm(UserChangeForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ('username', 'email', 'role', 'roomnumber', 'checkindatetime', 'checkoutdatetime')
+        # fields = ('username', 'email', 'role', 'roomnumber', 'checkindatetime', 'checkoutdatetime')
+        fields = ('username', 'email', 'roomnumber', 'checkindatetime', 'checkoutdatetime')
         labels = {
-            'role': _('Role'),
+            # 'role': _('Role'),
             'roomnumber': _('Room No'),
             'email': _('Email'),
             'checkindatetime': _('Checkin Date&Time'),

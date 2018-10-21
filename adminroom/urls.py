@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^service/getbotdata/$', views.getbotdata, name='getbotdata'),
     url(r'^service/botlearn/$', views.botlearn, name='botlearn'),
     url(r'^service/changeroomname/$', views.changeroomname, name='changeroomname'),
+    url(r'^service/(?P<pk>\d+)/customerinfo/$', views.customerinfo, name='customerinfo'),
 ]

@@ -92,6 +92,8 @@ def livechatrooms(request):
 def messages(request, pk):
     instance = get_object_or_404(Room, pk=pk)
     messages = Message.objects.filter(room = instance)
+    for message in messages:
+        message.content=translate(message.content, "&from="+message.language+"&to=en")
     theme = get_object_or_404(CurrentTheme, pk=1)
     return render(request, 'messages.html', {'messages': messages, 'theme': theme.theme})
 
@@ -218,5 +220,9 @@ def changeroomname(request):
         Room.objects.filter(pk = pk).update(alias=alias)
     return JsonResponse({'status': 'successfully changed'})
 
-
+@login_required
+def customerinfo(request, pk):
+    theme = get_object_or_404(CurrentTheme, pk=1)
+    customer = CustomUser.objects.get(pk = pk)
+    return render(request, 'customerinfo.html', {'theme': theme.theme, 'customer': customer })
  

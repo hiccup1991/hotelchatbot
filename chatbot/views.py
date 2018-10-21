@@ -48,7 +48,7 @@ def translate (text, params):
     response = conn.getresponse ()
     result = response.read()
     output = json.dumps(json.loads(result), indent=4, ensure_ascii=False).encode('utf-8')
-    print(output)
+    # print(output)
     output = json.loads(output)
     return output[0]['translations'][0]['text']
 
@@ -159,9 +159,10 @@ def reservations(request):
 def frontdeskask(request):
     if request.POST:
         message = request.POST.get("messageText", "")
+        language = request.POST.get("language", "en")
         roomname = request.user.username + "frontdesk"
         if message != "" and roomname != "":
-            instance = Message.objects.create(user=request.user, room = Room.objects.get(name=roomname), content=message)
+            instance = Message.objects.create(user=request.user, room = Room.objects.get(name=roomname), content=message, language=language)
             return JsonResponse({'status':'OK'})
     else:
         return HttpResponse("request must be post")
@@ -170,9 +171,10 @@ def frontdeskask(request):
 def conciergeask(request):
     if request.POST:
         message = request.POST.get("messageText", "")
+        language = request.POST.get("language", "en")
         roomname = request.user.username + "concierge"
         if message != "" and roomname != "":
-            instance = Message.objects.create(user=request.user, room = Room.objects.get(name = roomname), content=message)
+            instance = Message.objects.create(user=request.user, room = Room.objects.get(name = roomname), content=message, language=language)
             return JsonResponse({'status':'OK'})
     else:
         return HttpResponse("request must be post")
@@ -181,9 +183,10 @@ def conciergeask(request):
 def activitiesdeskask(request):
     if request.POST:
         message = request.POST.get("messageText", "")
+        language = request.POST.get("language", "en")
         roomname = request.user.username + "activitiesdesk"
         if message != "" and roomname != "":
-            instance = Message.objects.create(user=request.user, room = Room.objects.get(name = roomname), content=message)
+            instance = Message.objects.create(user=request.user, room = Room.objects.get(name = roomname), content=message, language=language)
             return JsonResponse({'status':'OK'})
     else:
         return HttpResponse("request must be post")
@@ -192,9 +195,10 @@ def activitiesdeskask(request):
 def operatorask(request):
     if request.POST:
         message = request.POST.get("messageText", "")
+        language = request.POST.get("language", "en")
         roomname = request.user.username + "operator"
         if message != "" and roomname != "":
-            instance = Message.objects.create(user=request.user, room = Room.objects.get(name = roomname), content=message)
+            instance = Message.objects.create(user=request.user, room = Room.objects.get(name = roomname), content=message, language=language)
             return JsonResponse({'status':'OK'})
     else:
         return HttpResponse("request must be post")
@@ -220,34 +224,42 @@ def reservationsask(request):
     return JsonResponse({'status':'OK','answer':bot_response})
 
 @login_required
-def frontdeskmessages(request):
+def frontdeskmessages(request, language):
     roomname = request.user.username + "frontdesk"
     instance = Room.objects.get(name = roomname)
     messages = Message.objects.filter(room = instance)
+    for message in messages:
+        message.content=translate(message.content, "&from="+message.language+"&to="+language)
     theme = get_object_or_404(CurrentTheme, pk=1)
     return render(request, 'chatbot/messages.html', {'messages': messages, 'theme': theme.theme})
 
 @login_required
-def conciergemessages(request):
+def conciergemessages(request, language):
     roomname = request.user.username + "concierge"
     instance = Room.objects.get(name = roomname)
     messages = Message.objects.filter(room = instance)
+    for message in messages:
+        message.content=translate(message.content, "&from="+message.language+"&to="+language)
     theme = get_object_or_404(CurrentTheme, pk=1)
     return render(request, 'chatbot/messages.html', {'messages': messages, 'theme': theme.theme})
 
 @login_required
-def activitiesdeskmessages(request):
+def activitiesdeskmessages(request, language):
     roomname = request.user.username + "activitiesdesk"
     instance = Room.objects.get(name = roomname)
     messages = Message.objects.filter(room = instance)
+    for message in messages:
+        message.content=translate(message.content, "&from="+message.language+"&to="+language)
     theme = get_object_or_404(CurrentTheme, pk=1)
     return render(request, 'chatbot/messages.html', {'messages': messages, 'theme': theme.theme})
 
 @login_required
-def operatormessages(request):
+def operatormessages(request, language):
     roomname = request.user.username + "operator"
     instance = Room.objects.get(name = roomname)
     messages = Message.objects.filter(room = instance)
+    for message in messages:
+        message.content=translate(message.content, "&from="+message.language+"&to="+language)
     theme = get_object_or_404(CurrentTheme, pk=1)
     return render(request, 'chatbot/messages.html', {'messages': messages, 'theme': theme.theme})
 

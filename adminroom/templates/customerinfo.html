@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="panel panel-info">
+        <div class="panel-body fixed-panel">
+            <div class="row">
+                <div class="col-xs-6">
+                    <h3>{{ user.username }}</h3>
+                </div>
+                <div class="col-xs-6">
+                    <h3 id='time-part'></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-info">
+        <div id="user-info" class="panel-body fixed-panel row">
+            <div class="col-md-12 col-sm-12 col-xs-12 panel-body fixed-panel">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4><span class="glyphicon glyphicon-globe"></span>{{ customer.username }}</h4>
+                    </div>
+                    <div class="panel-body fixed-panel">         
+                        <div id="customers" class="list-group row">
+                            <div class="list-group col-md-5 col-sm-12" style="padding-left: 5px;padding-right: 0;">
+                                <li class="list-group-item" value="Email">Email</a>
+                                <li class="list-group-item" value="Room No">Room No</a>
+                                <li class="list-group-item" value="Checkin Date">Checkin Date</a>
+                                <li class="list-group-item" value="Checkout Date">Checkout Date</a>
+                            </div>
+                            <div class="list-group col-md-7 col-sm-12" style="padding-right: 5px;padding-left: 0;">
+                                <li class="list-group-item" value="{{ customer.email }}">{{ customer.email }}</a>
+                                <li class="list-group-item" value="{{ customer.email }}">{{ customer.roomnumber }}</a>
+                                <li class="list-group-item" value="{{ customer.email }}">{{ customer.checkindatetime }}</a>
+                                <li class="list-group-item" value="{{ customer.email }}">{{ customer.checkoutdatetime }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

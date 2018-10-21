@@ -59,6 +59,28 @@
             </div>
         </div>
     </div>
+    <div class="panel panel-info">
+        <div id="user-info" class="panel-body fixed-panel row">
+            <div class="col-md-12 col-sm-12 col-xs-12 panel-body fixed-panel">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h4><span class="glyphicon glyphicon-globe"></span> Customers</h4>
+                    </div>
+                    <div class="panel-body fixed-panel">         
+                        <div id="customers" class="list-group">
+                            {% if customers.count > 0 %}
+                                {% for customer in customers %}
+                                    <a href="{% url 'customerinfo' pk=customer.pk %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-modal-window"></span> {{ customer.username }}</a>
+                                {% endfor %}
+                            {% else %}
+                                <a href="{% url 'adminchatroom' %}" class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-search"></span> there is no customers</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block script %}
     <script>

@@ -45,7 +45,7 @@ class Room(models.Model):
 class Message(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-
+    language = models.CharField(max_length=5)
     content = models.CharField(max_length=250)
     timestamp = models.DateTimeField(auto_now_add=True)
 
