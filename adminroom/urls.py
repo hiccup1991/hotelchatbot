@@ -19,4 +19,5 @@ urlpatterns = [
     url(r'^service/botlearn/$', views.botlearn, name='botlearn'),
     url(r'^service/changeroomname/$', views.changeroomname, name='changeroomname'),
     url(r'^service/(?P<pk>\d+)/customerinfo/$', views.customerinfo, name='customerinfo'),
+    url(r'^service/broadcastmessage/$', views.broadcastmessage, name='broadcastmessage'),
 ]

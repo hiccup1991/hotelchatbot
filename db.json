@@ -124,5 +124,97 @@
     "fields": {
         "theme": 5
     }
+},
+{
+    "model": "chatbot.customuser",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$al1jIzjICADn$lF7MAqzITLsCfx485K5gURvD9ar75gIs17gFEf3BOkY=",
+        "last_login": "2018-10-23T07:56:08.942Z",
+        "is_superuser": false,
+        "username": "frontdesk",
+        "first_name": "",
+        "last_name": "",
+        "email": "frontdesk@admin.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-10-23T07:56:08.767Z",
+        "role": "customer",
+        "checkindatetime": "2018-10-22T15:10:17Z",
+        "checkoutdatetime": "2018-10-31T15:10:14Z",
+        "roomnumber": "1",
+        "groups": [],
+        "user_permissions": [],
+        "boradcastmessage": []
+    }
+},
+{
+    "model": "chatbot.customuser",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$PfUkeNkrWuvi$aMMfHkgm6v28NHrX+vMjIAN+xJKvSbfWgFHMCcJQ3As=",
+        "last_login": "2018-10-23T07:57:27.583Z",
+        "is_superuser": false,
+        "username": "concierge",
+        "first_name": "",
+        "last_name": "",
+        "email": "concierge@admin.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-10-23T07:57:27.512Z",
+        "role": "customer",
+        "checkindatetime": "2018-10-22T15:10:54Z",
+        "checkoutdatetime": "2018-10-31T15:10:14Z",
+        "roomnumber": "1",
+        "groups": [],
+        "user_permissions": [],
+        "boradcastmessage": []
+    }
+},
+{
+    "model": "chatbot.customuser",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$rBO7tmpnJs03$T/EaH805eJjFtmh0iYKTj8u4xVCyky6xFlBNAAKQ+Pw=",
+        "last_login": "2018-10-23T08:00:29.294Z",
+        "is_superuser": false,
+        "username": "activitiesdesk",
+        "first_name": "",
+        "last_name": "",
+        "email": "activitiesdesk@admin.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-10-23T08:00:29.220Z",
+        "role": "customer",
+        "checkindatetime": "2018-10-15T16:10:04Z",
+        "checkoutdatetime": "2018-10-25T16:10:08Z",
+        "roomnumber": "1",
+        "groups": [],
+        "user_permissions": [],
+        "boradcastmessage": []
+    }
+},
+{
+    "model": "chatbot.customuser",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$UzpsCqOpA4jA$a6JnOtw6xta6wsY/Qf9vl7+cwvmaLZD7pc28RCJZcR4=",
+        "last_login": "2018-10-23T08:01:37.038Z",
+        "is_superuser": false,
+        "username": "operator",
+        "first_name": "",
+        "last_name": "",
+        "email": "operator@admin.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2018-10-23T08:01:36.964Z",
+        "role": "customer",
+        "checkindatetime": "2018-10-24T16:10:29Z",
+        "checkoutdatetime": "2018-10-25T16:10:08Z",
+        "roomnumber": "1",
+        "groups": [],
+        "user_permissions": [],
+        "boradcastmessage": []
+    }
 }
 ]

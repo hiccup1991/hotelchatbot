@@ -3,6 +3,11 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.template.defaultfilters import slugify
 
+
+class BroadcastMessage(models.Model):
+    content = models.CharField(max_length=250)
+    writer = models.CharField(max_length=50)
+
 class CustomUser(AbstractUser):
     CUSTOMER = 'customer'
     FRONTDESK = 'frontdesk' 
@@ -20,6 +25,7 @@ class CustomUser(AbstractUser):
     checkindatetime = models.DateTimeField(default=timezone.now)
     checkoutdatetime = models.DateTimeField(default=timezone.now)
     roomnumber = models.CharField(max_length = 20)
+    boradcastmessage = models.ManyToManyField(BroadcastMessage)
 
     def __str__(self):
         return self.username
@@ -60,3 +66,4 @@ class Theme(models.Model):
 
 class CurrentTheme(models.Model):
     theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
+

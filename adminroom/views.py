@@ -3,7 +3,8 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth import login, logout, authenticate
-from chatbot.models import ChatBotHistory, CustomUser, Message, Room, Theme, CurrentTheme
+
+from chatbot.models import ChatBotHistory, CustomUser, Message, Room, Theme, CurrentTheme, BroadcastMessage
 
 # encoding=utf8  
 import sys  
@@ -226,3 +227,11 @@ def customerinfo(request, pk):
     customer = CustomUser.objects.get(pk = pk)
     return render(request, 'customerinfo.html', {'theme': theme.theme, 'customer': customer })
  
+@login_required
+def broadcastmessage(request):
+    content = request.POST.get("message")
+    instance = BroadcastMessage.objects.create(content = content, writer = request.user.username)
+    users = CustomUser.objects.filter(role='customer')
+    for user in users:
+        user.boradcastmessage.add(instance)
+    return JsonResponse({'status': 'successfully sent'})
