@@ -25,11 +25,13 @@
                 {% block content %}
                 {% endblock %}
             </div>
-            
+            <div id="noty-holder"></div>
         </div>
     </body>
     <script src="{% static 'jquery-1.12.0/jquery-1.12.0.min.js' %}"></script>
     <script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'bootstrap-toast/jquery.toaster.js' %}"></script>
+
     <script>
         var themes = {
             "default": '{% static "bootstrap-3.3.7-dist/css/bootstrap.min.css" %}',
@@ -54,6 +56,26 @@
         themesheet.appendTo('head');
         var themeurl = themes['{{ theme }}']; 
         themesheet.attr('href', themeurl);
+
+        function getBroadcastMessages(){
+            $.ajax({
+                type: "POST",
+                url: '/broadcastmessages/',
+                headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                data: {},
+                success: function(response) {
+                    var message = response.message;
+                    if(message != "")
+                        $.toaster({ priority : 'warning', title : 'Title', message : response.message});
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+        $(function(){
+            setInterval(getBroadcastMessages, 5000);
+        });
     </script>
     {% block script %}
     {% endblock %}

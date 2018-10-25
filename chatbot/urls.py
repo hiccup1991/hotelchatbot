@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^incomingchat/$', views.incomingchat, name='incomingchat'),
     url(r'^selectincomingchat/(?P<roomname>\w+)/$', views.selectincomingchat, name='selectincomingchat'),
     url(r'^translate/$', views.reqtranslate, name='reqtranslate'),
+    url(r'^broadcastmessages/$', views.broadcastmessages, name='broadcastmessages'),
 ]

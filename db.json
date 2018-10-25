@@ -139,13 +139,13 @@
         "is_staff": false,
         "is_active": true,
         "date_joined": "2018-10-23T07:56:08.767Z",
-        "role": "customer",
+        "role": "frontdesk",
         "checkindatetime": "2018-10-22T15:10:17Z",
         "checkoutdatetime": "2018-10-31T15:10:14Z",
         "roomnumber": "1",
         "groups": [],
         "user_permissions": [],
-        "boradcastmessage": []
+        "broadcastmessage": []
     }
 },
 {
@@ -162,13 +162,13 @@
         "is_staff": false,
         "is_active": true,
         "date_joined": "2018-10-23T07:57:27.512Z",
-        "role": "customer",
+        "role": "concierge",
         "checkindatetime": "2018-10-22T15:10:54Z",
         "checkoutdatetime": "2018-10-31T15:10:14Z",
         "roomnumber": "1",
         "groups": [],
         "user_permissions": [],
-        "boradcastmessage": []
+        "broadcastmessage": []
     }
 },
 {
@@ -185,13 +185,13 @@
         "is_staff": false,
         "is_active": true,
         "date_joined": "2018-10-23T08:00:29.220Z",
-        "role": "customer",
+        "role": "activitiesdesk",
         "checkindatetime": "2018-10-15T16:10:04Z",
         "checkoutdatetime": "2018-10-25T16:10:08Z",
         "roomnumber": "1",
         "groups": [],
         "user_permissions": [],
-        "boradcastmessage": []
+        "broadcastmessage": []
     }
 },
 {
@@ -208,13 +208,13 @@
         "is_staff": false,
         "is_active": true,
         "date_joined": "2018-10-23T08:01:36.964Z",
-        "role": "customer",
+        "role": "operator",
         "checkindatetime": "2018-10-24T16:10:29Z",
         "checkoutdatetime": "2018-10-25T16:10:08Z",
         "roomnumber": "1",
         "groups": [],
         "user_permissions": [],
-        "boradcastmessage": []
+        "broadcastmessage": []
     }
 }
 ]

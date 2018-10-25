@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.models import AnonymousUser
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import ChatBotHistory, CustomUser, Message, Room, Theme, CurrentTheme
 
@@ -87,6 +88,16 @@ def signup(request):
         form = CustomUserCreationForm()
     theme = get_object_or_404(CurrentTheme, pk=1)
     return render(request, 'registration/signup.html', {'form': form, 'theme': theme.theme})
+
+def logout_user(request):
+    # Dispatch the signal before the user is logged out so the receivers have a
+    # chance to find out *who* logged out.
+    user = getattr(request, 'user', None)
+    if hasattr(user, 'is_authenticated') and not user.is_authenticated():
+        user = None
+    request.session.flush()
+    if hasattr(request, 'user'):
+        request.user = AnonymousUser()
 
 @login_required
 def select_room(request):
@@ -318,3 +329,12 @@ def selectincomingchat(request, roomname):
         return redirect('activitiesdesk')   
     if roomname.endswith("operator"):
         return redirect('operator')    
+
+@login_required
+def broadcastmessages(request):
+    instance=request.user.broadcastmessage.first()
+    message=''
+    if  instance is not None:
+        message=instance.content
+        instance.delete()
+    return JsonResponse({'message':message})

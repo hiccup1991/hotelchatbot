@@ -280,6 +280,7 @@
     $(function() {
         $('#righttranslate').click(function(e) {
             e.preventDefault();
+
             var req = 'src='+$("#text1drop .btn").attr('value')+'&tg='+$("#text2drop .btn").attr('value')+'&text='+$("#text1").val();
             //alert(req);
             $.ajax({
@@ -409,7 +410,6 @@
     });
     function getMessages(){
         var language=$("#motherlang .btn").attr('value');
-        //alert(language);
         if(!scrolling) {    
             $.get('/frontdesk/messages/'+language, function(messages){
                 //alert(messages);
@@ -420,12 +420,14 @@
         }
         scrolling = false;
     }
+
     var scrolling = false;
     $(function(){
         $('#msg-list-div').on('scroll', function(){
             scrolling = true;
         });
-        refreshTimer = setInterval(getMessages, 500);
+        setInterval(getMessages, 500);
     });
+
     </script>
 {% endblock %}

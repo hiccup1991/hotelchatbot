@@ -25,7 +25,7 @@ class CustomUser(AbstractUser):
     checkindatetime = models.DateTimeField(default=timezone.now)
     checkoutdatetime = models.DateTimeField(default=timezone.now)
     roomnumber = models.CharField(max_length = 20)
-    boradcastmessage = models.ManyToManyField(BroadcastMessage)
+    broadcastmessage = models.ManyToManyField(BroadcastMessage)
 
     def __str__(self):
         return self.username

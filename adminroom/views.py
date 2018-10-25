@@ -233,5 +233,5 @@ def broadcastmessage(request):
     instance = BroadcastMessage.objects.create(content = content, writer = request.user.username)
     users = CustomUser.objects.filter(role='customer')
     for user in users:
-        user.boradcastmessage.add(instance)
+        user.broadcastmessage.add(instance)
     return JsonResponse({'status': 'successfully sent'})
