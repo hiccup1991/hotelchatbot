@@ -334,5 +334,6 @@ def broadcastmessages(request):
     message=''
     if  instance is not None:
         message=instance.content
-        instance.delete()
+        request.user.broadcastmessage.remove(instance)
+        print 'message deleted'
     return JsonResponse({'message':message})
