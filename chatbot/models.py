@@ -21,10 +21,10 @@ class CustomUser(AbstractUser):
         (ACTIVITIESDESK, 'activitiesdesk'),
         (OPERATOR, 'operator'),
     )
-    role = models.CharField(max_length=20, choices=ROLE, default=CUSTOMER,)
-    checkindatetime = models.DateTimeField(default=timezone.now)
-    checkoutdatetime = models.DateTimeField(default=timezone.now)
-    roomnumber = models.CharField(max_length = 20)
+    role = models.CharField(max_length=20, choices=ROLE, default=CUSTOMER)
+    checkindatetime = models.DateTimeField(default=timezone.now, null=True, blank=True)
+    checkoutdatetime = models.DateTimeField(default=timezone.now, null=True, blank=True)
+    roomnumber = models.CharField(max_length = 20, null=True, blank=True)
     broadcastmessage = models.ManyToManyField(BroadcastMessage)
 
     def __str__(self):

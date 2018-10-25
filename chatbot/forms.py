@@ -7,8 +7,7 @@ import datetime
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        # fields = ('username', 'email', 'role', 'roomnumber', 'checkindatetime', 'checkoutdatetime')
-        fields = ('username', 'email', 'roomnumber', 'checkindatetime', 'checkoutdatetime')
+        fields = ('username', 'email', 'role', 'roomnumber', 'checkindatetime', 'checkoutdatetime')
         labels = {
             # 'role': _('Role'),
             'roomnumber': _('Room No'),
