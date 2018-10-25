@@ -16,10 +16,10 @@ class CustomUserCreationForm(UserCreationForm):
             'checkoutdatetime': _('Checkout Date&Time')
         }
         checkindatetime = forms.DateTimeField(
-            input_formats=('%Y-%m-%d %H:%M:%S')
+            input_formats=('%Y-%m-%d %H:%M')
         )  
         checkoutdatetime = forms.DateTimeField(
-            input_formats=('%Y-%m-%d %H:%M:%S')
+            input_formats=('%Y-%m-%d %H:%M')
         )      
 class CustomUserChangeForm(UserChangeForm):
     class Meta(UserCreationForm.Meta):
