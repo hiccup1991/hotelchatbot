@@ -1,2 +1,2 @@
 # hotelchatbot
-![alt text](http://url/to/img.png)
+![alt text](https://github.com/hiccup1991/hotelchatbot/blob/master/HotelChatRoom.png)
